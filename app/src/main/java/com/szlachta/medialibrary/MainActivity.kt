@@ -1,4 +1,4 @@
-package com.example.medialibrary
+package com.szlachta.medialibrary
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
