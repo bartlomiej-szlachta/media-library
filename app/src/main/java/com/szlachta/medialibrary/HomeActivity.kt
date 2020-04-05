@@ -36,5 +36,6 @@ class HomeActivity : AppCompatActivity() {
         }
         startActivity(intent)
         FirebaseAuth.getInstance().signOut()
+        finish()
     }
 }
