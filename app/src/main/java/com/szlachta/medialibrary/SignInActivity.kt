@@ -74,7 +74,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun onSignedIn() {
-        val intent: Intent = Intent(this, MainActivity::class.java).apply {
+        val intent: Intent = Intent(this, HomeActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         }
         startActivity(intent)
