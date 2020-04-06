@@ -3,12 +3,14 @@ package com.szlachta.medialibrary
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.layout_test.*
 
 class HomeActivity : AppCompatActivity() {
     companion object {
@@ -21,6 +23,10 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         setContentView(R.layout.activity_home)
+
+        floating_action_button_add.setOnClickListener {
+            // TODO: navigate to the form
+        }
 
         sign_out.setOnClickListener {
             signOut()
