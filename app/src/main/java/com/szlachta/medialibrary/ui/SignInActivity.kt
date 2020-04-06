@@ -1,4 +1,4 @@
-package com.szlachta.medialibrary
+package com.szlachta.medialibrary.ui
 
 import android.content.Context
 import android.content.Intent
@@ -14,6 +14,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.szlachta.medialibrary.R
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignInActivity : AppCompatActivity() {

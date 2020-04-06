@@ -1,4 +1,4 @@
-package com.szlachta.medialibrary
+package com.szlachta.medialibrary.ui
 
 import android.content.Context
 import android.content.Intent
@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import com.szlachta.medialibrary.R
 import com.szlachta.medialibrary.ui.books.BooksFragment
 import com.szlachta.medialibrary.ui.games.GamesFragment
 import com.szlachta.medialibrary.ui.movies.MoviesFragment
