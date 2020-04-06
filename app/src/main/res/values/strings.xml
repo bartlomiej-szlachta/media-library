@@ -3,4 +3,10 @@
     <string name="app_description">List your favorite films, games and books!</string>
     <string name="button_sign_in_text">Sign In with Google</string>
     <string name="app_logo">App logo</string>
+    <string name="menu_games">Games</string>
+    <string name="menu_movies">Movies</string>
+    <string name="menu_books">Books</string>
+    <string name="search_games">Search games</string>
+    <string name="search_movies">Search movies</string>
+    <string name="search_books">Search books</string>
 </resources>

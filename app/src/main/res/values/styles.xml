@@ -6,7 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 
-        <item name="android:background">@color/colorBackground</item>
         <item name="android:statusBarColor">@color/colorBackground</item>
     </style>
 

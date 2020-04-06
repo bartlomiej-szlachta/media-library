@@ -43,7 +43,9 @@ class SignInActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         button_sign_in.setOnClickListener {
-            startActivityForResult(googleSignInClient.signInIntent, RC_SIGN_IN)
+            startActivityForResult(googleSignInClient.signInIntent,
+                RC_SIGN_IN
+            )
         }
     }
 
@@ -73,7 +75,11 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun onSignedIn() {
-        startActivity(HomeActivity.getLaunchIntent(this))
+        startActivity(
+            HomeActivity.getLaunchIntent(
+                this
+            )
+        )
         finish()
     }
 
