@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.szlachta.medialibrary.R
 import com.szlachta.medialibrary.ui.books.BooksFragment
+import com.szlachta.medialibrary.ui.form.FormActivity
 import com.szlachta.medialibrary.ui.games.GamesFragment
 import com.szlachta.medialibrary.ui.movies.MoviesFragment
 import kotlinx.android.synthetic.main.activity_home.*
@@ -34,7 +35,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         floating_action_button_add.setOnClickListener {
-            // TODO: navigate to the form
+            startActivity(Intent(this, FormActivity::class.java))
         }
 
 //        TODO: log out button on profile dialog
