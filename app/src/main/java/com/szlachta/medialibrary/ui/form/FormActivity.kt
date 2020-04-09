@@ -1,20 +1,23 @@
 package com.szlachta.medialibrary.ui.form
 
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.szlachta.medialibrary.R
+import kotlinx.android.synthetic.main.activity_form.*
 
 class FormActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.colorBackground)))
+        setContentView(R.layout.activity_form)
+
+        setSupportActionBar(action_bar_form)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear)
-        setContentView(R.layout.activity_form)
+        // TODO: get context
+        supportActionBar?.title = "Do something"
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

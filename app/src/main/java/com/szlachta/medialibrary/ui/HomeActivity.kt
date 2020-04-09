@@ -2,8 +2,10 @@ package com.szlachta.medialibrary.ui
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.szlachta.medialibrary.R
@@ -11,6 +13,7 @@ import com.szlachta.medialibrary.ui.books.BooksFragment
 import com.szlachta.medialibrary.ui.form.FormActivity
 import com.szlachta.medialibrary.ui.games.GamesFragment
 import com.szlachta.medialibrary.ui.movies.MoviesFragment
+import com.szlachta.medialibrary.ui.search.SearchActivity
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
@@ -23,9 +26,12 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.colorBackground)))
         setContentView(R.layout.activity_home)
 
+        setSupportActionBar(action_bar_home)
+        action_bar_home.setOnClickListener {
+            startActivity(Intent(this, SearchActivity::class.java))
+        }
 
         bottom_navigation.setOnNavigationItemSelectedListener {
             if (bottom_navigation.selectedItemId == it.itemId) {
@@ -50,6 +56,22 @@ class HomeActivity : AppCompatActivity() {
         handleBottomTabSelection(bottom_navigation.selectedItemId)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.home_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_profile -> {
+                // TODO: Profile dialog
+                Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> false
+        }
+    }
+
 //    private fun setDataOnView() {
 //        val firebaseUser: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
 //
@@ -68,7 +90,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun handleBottomTabSelection(actionId: Int): Boolean = when (actionId) {
         R.id.action_games -> {
-            title = getString(R.string.search_games)
+            supportActionBar?.title = getString(R.string.search_games)
             supportFragmentManager.beginTransaction()
 // TODO: .setCustomAnimations()
 // TODO: show / hide instead of replace
@@ -77,7 +99,7 @@ class HomeActivity : AppCompatActivity() {
             true
         }
         R.id.action_movies -> {
-            title = getString(R.string.search_movies)
+            supportActionBar?.title = getString(R.string.search_movies)
             supportFragmentManager.beginTransaction()
 // TODO: .setCustomAnimations()
 // TODO: show / hide instead of replace
@@ -86,7 +108,7 @@ class HomeActivity : AppCompatActivity() {
             true
         }
         R.id.action_books -> {
-            title = getString(R.string.search_books)
+            supportActionBar?.title = getString(R.string.search_books)
             supportFragmentManager.beginTransaction()
 // TODO: .setCustomAnimations()
 // TODO: show / hide instead of replace

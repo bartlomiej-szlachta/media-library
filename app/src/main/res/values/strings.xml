@@ -10,5 +10,6 @@
     <string name="search_movies">Search movies</string>
     <string name="search_books">Search books</string>
     <string name="hint_title">Title</string>
-    <string name="form_save">Save</string>
+    <string name="action_form_save">Save</string>
+    <string name="action_profile">Profile</string>
 </resources>

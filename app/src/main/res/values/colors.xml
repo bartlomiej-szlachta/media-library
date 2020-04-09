@@ -3,5 +3,8 @@
     <color name="colorPrimary">#80CBC4</color>
     <color name="colorPrimaryDark">#008477</color>
     <color name="colorBackground">#202124</color>
+    <color name="colorGrey">#303134</color>
+    <color name="colorRipple">#828286</color>
+    <color name="colorText">#9AA0A6</color>
     <color name="colorWhite">#FFFFFF</color>
 </resources>

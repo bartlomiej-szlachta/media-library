@@ -7,6 +7,25 @@
     android:background="@color/colorBackground"
     tools:context=".ui.HomeActivity">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/action_bar_home"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/layout_bg_toolbar"
+        android:clickable="true"
+        android:elevation="4dp"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:titleTextAppearance="@style/ActionBarTextTheme"
+        app:titleTextColor="@color/colorText" />
+
     <!-- TODO: constraintBottom_toBottomOf="parent" ? -->
     <FrameLayout
         android:id="@+id/fragment_container"
@@ -16,7 +35,7 @@
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/action_bar_home" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_action_button_add"
