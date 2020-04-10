@@ -14,4 +14,5 @@
     <string name="action_profile">Profile</string>
     <string name="description_profile_image">Profile image</string>
     <string name="button_sign_out">Sign out</string>
+    <string name="action_clear">Clear</string>
 </resources>

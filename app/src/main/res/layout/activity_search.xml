@@ -22,6 +22,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:titleTextAppearance="@style/ActionBarTextTheme"
-        app:titleTextColor="@color/colorText" />
+        app:titleTextColor="@color/colorText">
+
+        <EditText
+            android:id="@+id/input_search_query"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:hint="@string/search_games"
+            android:imeOptions="actionSearch"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName" />
+    </com.google.android.material.appbar.MaterialToolbar>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

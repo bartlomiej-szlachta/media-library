@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.auth.FirebaseAuth
+import com.szlachta.medialibrary.ItemEnum
 import com.szlachta.medialibrary.R
 import com.szlachta.medialibrary.ui.books.BooksFragment
 import com.szlachta.medialibrary.ui.form.FormActivity
@@ -19,10 +20,14 @@ import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
     companion object {
+        const val CURRENT_ITEM_EXTRA = "current_item_extra"
+
         fun getLaunchIntent(from: Context) = Intent(from, HomeActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         }
     }
+
+    private lateinit var currentItem: ItemEnum
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +36,9 @@ class HomeActivity : AppCompatActivity() {
 
         setSupportActionBar(action_bar_home)
         action_bar_home.setOnClickListener {
-            startActivity(Intent(this, SearchActivity::class.java))
+            val intent = Intent(this, SearchActivity::class.java)
+                .putExtra(CURRENT_ITEM_EXTRA, currentItem)
+            startActivity(intent)
         }
 
         bottom_navigation.setOnNavigationItemSelectedListener {
@@ -75,6 +82,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun handleBottomTabSelection(actionId: Int): Boolean = when (actionId) {
         R.id.action_games -> {
+            currentItem = ItemEnum.GAMES
             supportActionBar?.title = getString(R.string.search_games)
             supportFragmentManager.beginTransaction()
 // TODO: .setCustomAnimations()
@@ -84,6 +92,7 @@ class HomeActivity : AppCompatActivity() {
             true
         }
         R.id.action_movies -> {
+            currentItem = ItemEnum.MOVIES
             supportActionBar?.title = getString(R.string.search_movies)
             supportFragmentManager.beginTransaction()
 // TODO: .setCustomAnimations()
@@ -93,6 +102,7 @@ class HomeActivity : AppCompatActivity() {
             true
         }
         R.id.action_books -> {
+            currentItem = ItemEnum.BOOKS
             supportActionBar?.title = getString(R.string.search_books)
             supportFragmentManager.beginTransaction()
 // TODO: .setCustomAnimations()
