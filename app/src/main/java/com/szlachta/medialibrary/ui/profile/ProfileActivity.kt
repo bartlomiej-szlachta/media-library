@@ -11,6 +11,9 @@ import com.szlachta.medialibrary.R
 import kotlinx.android.synthetic.main.activity_profile.*
 
 class ProfileActivity : AppCompatActivity() {
+    companion object {
+        const val RC_SIGN_OUT = 1
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +30,8 @@ class ProfileActivity : AppCompatActivity() {
         profile_email.text = firebaseUser.email
 
         button_sign_out.setOnClickListener {
-            // TODO: log out
+            setResult(RC_SIGN_OUT)
+            finish()
         }
     }
 }

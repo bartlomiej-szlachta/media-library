@@ -59,10 +59,20 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_profile -> {
-                startActivity(Intent(this, ProfileActivity::class.java))
+                startActivityForResult(
+                    Intent(this, ProfileActivity::class.java),
+                    ProfileActivity.RC_SIGN_OUT
+                )
                 true
             }
             else -> false
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == ProfileActivity.RC_SIGN_OUT) {
+            signOut()
         }
     }
 
