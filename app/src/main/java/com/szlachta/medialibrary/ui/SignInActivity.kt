@@ -40,6 +40,7 @@ class SignInActivity : AppCompatActivity() {
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
+        googleSignInClient.revokeAccess()
         firebaseAuth = FirebaseAuth.getInstance()
 
         button_sign_in.setOnClickListener {
