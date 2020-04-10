@@ -8,7 +8,7 @@
 
         <item name="android:statusBarColor">@color/colorBackground</item>
     </style>
-    
+
     <style name="ActionBarTextTheme" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textSize">16sp</item>
     </style>
