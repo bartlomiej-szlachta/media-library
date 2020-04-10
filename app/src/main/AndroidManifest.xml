@@ -24,6 +24,9 @@
         <activity android:name=".ui.HomeActivity" />
         <activity android:name=".ui.form.FormActivity" />
         <activity android:name=".ui.search.SearchActivity" />
+        <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.Dialog" />
     </application>
 
 </manifest>

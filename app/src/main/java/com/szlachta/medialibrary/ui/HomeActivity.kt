@@ -5,14 +5,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import com.google.firebase.auth.FirebaseAuth
 import com.szlachta.medialibrary.R
 import com.szlachta.medialibrary.ui.books.BooksFragment
 import com.szlachta.medialibrary.ui.form.FormActivity
 import com.szlachta.medialibrary.ui.games.GamesFragment
 import com.szlachta.medialibrary.ui.movies.MoviesFragment
+import com.szlachta.medialibrary.ui.profile.ProfileActivity
 import com.szlachta.medialibrary.ui.search.SearchActivity
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -43,12 +44,6 @@ class HomeActivity : AppCompatActivity() {
         floating_action_button_add.setOnClickListener {
             startActivity(Intent(this, FormActivity::class.java))
         }
-
-//        TODO: log out button on profile dialog
-//        sign_out.setOnClickListener {
-//            signOut()
-//        }
-//        setDataOnView()
     }
 
     override fun onResume() {
@@ -64,29 +59,12 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_profile -> {
-                // TODO: Profile dialog
-                Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, ProfileActivity::class.java))
                 true
             }
             else -> false
         }
     }
-
-//    private fun setDataOnView() {
-//        val firebaseUser: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
-//
-//        Glide.with(this)
-//            .load(firebaseUser.photoUrl)
-//            .into(findViewById(R.id.profile_image))
-//        profile_text.text = firebaseUser.displayName
-//        profile_email.text = firebaseUser.email
-//    }
-//
-//    private fun signOut() {
-//        startActivity(SignInActivity.getLaunchIntent(this))
-//        FirebaseAuth.getInstance().signOut()
-//        finish()
-//    }
 
     private fun handleBottomTabSelection(actionId: Int): Boolean = when (actionId) {
         R.id.action_games -> {
@@ -117,5 +95,11 @@ class HomeActivity : AppCompatActivity() {
             true
         }
         else -> false
+    }
+
+    private fun signOut() {
+        startActivity(SignInActivity.getLaunchIntent(this))
+        FirebaseAuth.getInstance().signOut()
+        finish()
     }
 }
