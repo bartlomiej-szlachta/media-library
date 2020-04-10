@@ -35,6 +35,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         setSupportActionBar(action_bar_home)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         action_bar_home.setOnClickListener {
             val intent = Intent(this, SearchActivity::class.java)
                 .putExtra(CURRENT_ITEM_EXTRA, currentItem)
@@ -83,7 +84,7 @@ class HomeActivity : AppCompatActivity() {
     private fun handleBottomTabSelection(actionId: Int): Boolean = when (actionId) {
         R.id.action_games -> {
             currentItem = ItemEnum.GAMES
-            supportActionBar?.title = getString(R.string.search_games)
+            action_bar_home_title.text = getString(R.string.search_games)
             supportFragmentManager.beginTransaction()
 // TODO: .setCustomAnimations()
 // TODO: show / hide instead of replace
@@ -93,7 +94,7 @@ class HomeActivity : AppCompatActivity() {
         }
         R.id.action_movies -> {
             currentItem = ItemEnum.MOVIES
-            supportActionBar?.title = getString(R.string.search_movies)
+            action_bar_home_title.text = getString(R.string.search_movies)
             supportFragmentManager.beginTransaction()
 // TODO: .setCustomAnimations()
 // TODO: show / hide instead of replace
@@ -103,7 +104,7 @@ class HomeActivity : AppCompatActivity() {
         }
         R.id.action_books -> {
             currentItem = ItemEnum.BOOKS
-            supportActionBar?.title = getString(R.string.search_books)
+            action_bar_home_title.text = getString(R.string.search_books)
             supportFragmentManager.beginTransaction()
 // TODO: .setCustomAnimations()
 // TODO: show / hide instead of replace

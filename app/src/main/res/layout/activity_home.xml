@@ -22,9 +22,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:titleTextAppearance="@style/ActionBarTextTheme"
-        app:titleTextColor="@color/colorText" />
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageView
+            android:id="@+id/icon_search"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_search" />
+
+        <TextView
+            android:id="@+id/action_bar_home_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:text="@string/search_games"
+            android:textSize="16sp" />
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <!-- TODO: constraintBottom_toBottomOf="parent" ? -->
     <FrameLayout
