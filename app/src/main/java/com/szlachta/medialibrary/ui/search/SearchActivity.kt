@@ -8,7 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.widget.addTextChangedListener
-import com.szlachta.medialibrary.ItemEnum
+import com.szlachta.medialibrary.model.ItemEnum
 import com.szlachta.medialibrary.R
 import com.szlachta.medialibrary.ui.HomeActivity
 import kotlinx.android.synthetic.main.activity_search.*

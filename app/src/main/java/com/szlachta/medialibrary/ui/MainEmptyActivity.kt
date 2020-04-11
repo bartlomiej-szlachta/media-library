@@ -1,4 +1,4 @@
-package com.szlachta.medialibrary
+package com.szlachta.medialibrary.ui
 
 import android.content.Intent
 import android.os.Bundle

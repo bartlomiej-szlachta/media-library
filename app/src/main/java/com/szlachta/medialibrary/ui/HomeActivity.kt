@@ -8,7 +8,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.auth.FirebaseAuth
-import com.szlachta.medialibrary.ItemEnum
+import com.szlachta.medialibrary.model.ItemEnum
 import com.szlachta.medialibrary.R
 import com.szlachta.medialibrary.ui.books.BooksFragment
 import com.szlachta.medialibrary.ui.form.FormActivity
