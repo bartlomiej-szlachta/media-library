@@ -1,8 +1,10 @@
 package com.szlachta.medialibrary.ui.search
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.widget.addTextChangedListener
@@ -40,6 +42,12 @@ class SearchActivity : AppCompatActivity() {
                 isClearIconVisible = false
             }
         }
+
+        // on keyboard confirm button - remove focus, hide keyboard
+        input_search_query.setOnEditorActionListener { _, _, _ ->
+            onFinishTyping()
+            true
+        }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
@@ -56,6 +64,7 @@ class SearchActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_clear -> {
                 input_search_query.setText("")
+                onStartTyping()
                 true
             }
             else -> false
@@ -73,5 +82,22 @@ class SearchActivity : AppCompatActivity() {
             ItemEnum.MOVIES -> getString(R.string.search_movies)
             ItemEnum.BOOKS -> getString(R.string.search_books)
         }
+    }
+
+    private fun onStartTyping() {
+        if (currentFocus != null) {
+            return
+        }
+        val imm: InputMethodManager =
+            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+        input_search_query.requestFocus()
+    }
+
+    private fun onFinishTyping() {
+        val imm: InputMethodManager =
+            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+        input_search_query.clearFocus()
     }
 }
