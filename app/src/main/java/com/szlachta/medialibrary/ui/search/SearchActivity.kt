@@ -65,6 +65,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        onFinishTyping()
         finish()
         return true
     }
