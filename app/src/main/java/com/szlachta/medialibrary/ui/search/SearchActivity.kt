@@ -29,18 +29,11 @@ class SearchActivity : AppCompatActivity() {
         currentItem = intent.getSerializableExtra(HomeActivity.CURRENT_ITEM_EXTRA) as ItemEnum
         setHint()
 
-        input_search_query.requestFocus()
+        onStartTyping()
+
+        // on text changed - show / hide clear icon
         input_search_query.addTextChangedListener {
-            if (input_search_query.text.isNotEmpty()) {
-                if (!isClearIconVisible) {
-                    invalidateOptionsMenu()
-                    isClearIconVisible = true
-                }
-                // TODO: perform query
-            } else {
-                invalidateOptionsMenu()
-                isClearIconVisible = false
-            }
+            onType()
         }
 
         // on keyboard confirm button - remove focus, hide keyboard
@@ -99,5 +92,18 @@ class SearchActivity : AppCompatActivity() {
             getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         input_search_query.clearFocus()
+    }
+
+    private fun onType() {
+        if (input_search_query.text.isNotEmpty()) {
+            if (!isClearIconVisible) {
+                invalidateOptionsMenu()
+                isClearIconVisible = true
+            }
+            // TODO: perform query
+        } else {
+            invalidateOptionsMenu()
+            isClearIconVisible = false
+        }
     }
 }
