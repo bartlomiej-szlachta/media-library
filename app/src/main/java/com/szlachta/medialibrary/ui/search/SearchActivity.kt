@@ -5,21 +5,30 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.szlachta.medialibrary.R
-import com.szlachta.medialibrary.model.ItemEnum
+import com.szlachta.medialibrary.model.Item
+import com.szlachta.medialibrary.model.ItemTypeEnum
 import com.szlachta.medialibrary.ui.HomeActivity
+import com.szlachta.medialibrary.ui.list.ImageLoader
+import com.szlachta.medialibrary.ui.list.ListAdapter
+import com.szlachta.medialibrary.ui.list.OnItemClickListener
 import com.szlachta.medialibrary.viewmodel.MoviesViewModel
+import com.szlachta.medialibrary.viewmodel.SearchViewModel
 import kotlinx.android.synthetic.main.activity_search.*
 
-class SearchActivity : AppCompatActivity() {
+class SearchActivity : AppCompatActivity(), ImageLoader, OnItemClickListener {
 
-    private lateinit var viewModel: MoviesViewModel
-    private lateinit var currentItem: ItemEnum
+    private lateinit var viewModel: SearchViewModel
     private var isClearIconVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,13 +36,16 @@ class SearchActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         setContentView(R.layout.activity_search)
 
-        viewModel = ViewModelProvider(this).get(MoviesViewModel::class.java)
-
         setSupportActionBar(action_bar_search)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        currentItem = intent.getSerializableExtra(HomeActivity.CURRENT_ITEM_EXTRA) as ItemEnum
-        setHint()
+        val currentItem =
+            intent.getSerializableExtra(HomeActivity.CURRENT_ITEM_EXTRA) as ItemTypeEnum
+        initializeViewModel(currentItem)
+        setHint(currentItem)
+
+        rv_search_list.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        rv_search_list.adapter = ListAdapter(emptyList(), this, this)
 
         onStartTyping()
 
@@ -76,11 +88,33 @@ class SearchActivity : AppCompatActivity() {
         return true
     }
 
-    private fun setHint() {
-        input_search_query.hint = when (currentItem) {
-            ItemEnum.GAMES -> getString(R.string.search_games)
-            ItemEnum.MOVIES -> getString(R.string.search_movies)
-            ItemEnum.BOOKS -> getString(R.string.search_books)
+    override fun loadImage(url: String, into: ImageView) {
+        Glide.with(this).load(url).into(into)
+    }
+
+    override fun onItemClicked(item: Item) {
+        // TODO: on item clicked
+        Toast.makeText(this, item.title, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun initializeViewModel(itemType: ItemTypeEnum) {
+        viewModel = when (itemType) {
+            ItemTypeEnum.MOVIES -> ViewModelProvider(this).get(MoviesViewModel::class.java)
+            else -> {
+                // TODO: implement other data types search
+                onFinishTyping()
+                Toast.makeText(this, "Try searching movies", Toast.LENGTH_SHORT).show()
+                finish()
+                ViewModelProvider(this).get(MoviesViewModel::class.java)
+            }
+        }
+    }
+
+    private fun setHint(itemType: ItemTypeEnum) {
+        input_search_query.hint = when (itemType) {
+            ItemTypeEnum.GAMES -> getString(R.string.search_games)
+            ItemTypeEnum.MOVIES -> getString(R.string.search_movies)
+            ItemTypeEnum.BOOKS -> getString(R.string.search_books)
         }
     }
 
@@ -115,15 +149,18 @@ class SearchActivity : AppCompatActivity() {
         } else {
             invalidateOptionsMenu()
             isClearIconVisible = false
-            textViewResponse.text = "" // TODO: empty the data list
+            rv_search_list.adapter = ListAdapter(emptyList(), this, this)
         }
     }
 
     private fun requestMoviesList(movieQuery: String) {
-        viewModel.getMoviesList(movieQuery).observe(this,
+        viewModel.getItemsList(movieQuery).observe(this,
             Observer { t ->
-                // TODO: show data list
-                textViewResponse.text = t?.toString() ?: "null"
+                if (t.items != null) {
+                    rv_search_list.adapter = ListAdapter(t.items!!, this, this)
+                } else {
+                    Toast.makeText(this, t.errorMessage, Toast.LENGTH_SHORT).show()
+                }
             })
     }
 }

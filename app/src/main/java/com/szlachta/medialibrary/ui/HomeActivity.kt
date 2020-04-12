@@ -8,7 +8,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.auth.FirebaseAuth
-import com.szlachta.medialibrary.model.ItemEnum
+import com.szlachta.medialibrary.model.ItemTypeEnum
 import com.szlachta.medialibrary.R
 import com.szlachta.medialibrary.ui.books.BooksFragment
 import com.szlachta.medialibrary.ui.form.FormActivity
@@ -27,7 +27,7 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private lateinit var currentItem: ItemEnum
+    private lateinit var currentItem: ItemTypeEnum
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +83,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun handleBottomTabSelection(actionId: Int): Boolean = when (actionId) {
         R.id.action_games -> {
-            currentItem = ItemEnum.GAMES
+            currentItem = ItemTypeEnum.GAMES
             action_bar_home_title.text = getString(R.string.search_games)
             supportFragmentManager.beginTransaction()
 // TODO: .setCustomAnimations()
@@ -93,7 +93,7 @@ class HomeActivity : AppCompatActivity() {
             true
         }
         R.id.action_movies -> {
-            currentItem = ItemEnum.MOVIES
+            currentItem = ItemTypeEnum.MOVIES
             action_bar_home_title.text = getString(R.string.search_movies)
             supportFragmentManager.beginTransaction()
 // TODO: .setCustomAnimations()
@@ -103,7 +103,7 @@ class HomeActivity : AppCompatActivity() {
             true
         }
         R.id.action_books -> {
-            currentItem = ItemEnum.BOOKS
+            currentItem = ItemTypeEnum.BOOKS
             action_bar_home_title.text = getString(R.string.search_books)
             supportFragmentManager.beginTransaction()
 // TODO: .setCustomAnimations()

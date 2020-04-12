@@ -1,5 +1,5 @@
 package com.szlachta.medialibrary.model
 
-enum class ItemEnum {
+enum class ItemTypeEnum {
     GAMES, MOVIES, BOOKS
 }
