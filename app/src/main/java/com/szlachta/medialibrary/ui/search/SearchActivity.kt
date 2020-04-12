@@ -8,13 +8,17 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.widget.addTextChangedListener
-import com.szlachta.medialibrary.model.ItemEnum
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.szlachta.medialibrary.R
+import com.szlachta.medialibrary.model.ItemEnum
 import com.szlachta.medialibrary.ui.HomeActivity
+import com.szlachta.medialibrary.viewmodel.MoviesViewModel
 import kotlinx.android.synthetic.main.activity_search.*
 
 class SearchActivity : AppCompatActivity() {
 
+    private lateinit var viewModel: MoviesViewModel
     private lateinit var currentItem: ItemEnum
     private var isClearIconVisible = false
 
@@ -22,6 +26,8 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         setContentView(R.layout.activity_search)
+
+        viewModel = ViewModelProvider(this).get(MoviesViewModel::class.java)
 
         setSupportActionBar(action_bar_search)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -97,14 +103,27 @@ class SearchActivity : AppCompatActivity() {
 
     private fun onType() {
         if (input_search_query.text.isNotEmpty()) {
+
+            // show clear icon if necessary
             if (!isClearIconVisible) {
                 invalidateOptionsMenu()
                 isClearIconVisible = true
             }
-            // TODO: perform query
+
+            // request data
+            requestMoviesList(input_search_query.text.toString())
         } else {
             invalidateOptionsMenu()
             isClearIconVisible = false
+            textViewResponse.text = "" // TODO: empty the data list
         }
+    }
+
+    private fun requestMoviesList(movieQuery: String) {
+        viewModel.getMoviesList(movieQuery).observe(this,
+            Observer { t ->
+                // TODO: show data list
+                textViewResponse.text = t?.toString() ?: "null"
+            })
     }
 }
