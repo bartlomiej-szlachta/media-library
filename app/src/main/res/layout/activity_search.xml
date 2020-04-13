@@ -20,6 +20,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/layout_bg_toolbar"
             android:elevation="4dp"
             app:layout_scrollFlags="scroll|enterAlways">
