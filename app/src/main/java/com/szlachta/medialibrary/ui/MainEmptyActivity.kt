@@ -5,8 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.szlachta.medialibrary.ui.HomeActivity
-import com.szlachta.medialibrary.ui.SignInActivity
+import com.szlachta.medialibrary.ui.home.HomeActivity
 
 class MainEmptyActivity : AppCompatActivity() {
 

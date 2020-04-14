@@ -16,4 +16,13 @@
     <string name="button_sign_out">Sign out</string>
     <string name="action_clear">Clear</string>
     <string name="item_image_description">Image</string>
+    <string name="tab_games_planned">Planned</string>
+    <string name="tab_games_in_progress">Playing</string>
+    <string name="tab_games_finished">Finished</string>
+    <string name="tab_movies_planned">Planned</string>
+    <string name="tab_movies_in_progress">Watching</string>
+    <string name="tab_movies_finished">Finished</string>
+    <string name="tab_books_planned">Planned</string>
+    <string name="tab_books_in_progress">Reading</string>
+    <string name="tab_books_finished">Finished</string>
 </resources>

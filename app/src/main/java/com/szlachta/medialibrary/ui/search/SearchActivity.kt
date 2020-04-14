@@ -18,7 +18,7 @@ import com.bumptech.glide.Glide
 import com.szlachta.medialibrary.R
 import com.szlachta.medialibrary.model.Item
 import com.szlachta.medialibrary.model.ItemTypeEnum
-import com.szlachta.medialibrary.ui.HomeActivity
+import com.szlachta.medialibrary.ui.home.HomeActivity
 import com.szlachta.medialibrary.ui.list.ImageLoader
 import com.szlachta.medialibrary.ui.list.ListAdapter
 import com.szlachta.medialibrary.ui.list.OnItemClickListener

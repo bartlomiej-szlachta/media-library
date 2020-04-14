@@ -1,4 +1,4 @@
-package com.szlachta.medialibrary.ui
+package com.szlachta.medialibrary.ui.home
 
 import android.content.Context
 import android.content.Intent
@@ -10,10 +10,11 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.auth.FirebaseAuth
 import com.szlachta.medialibrary.model.ItemTypeEnum
 import com.szlachta.medialibrary.R
-import com.szlachta.medialibrary.ui.books.BooksFragment
+import com.szlachta.medialibrary.ui.SignInActivity
+import com.szlachta.medialibrary.ui.home.books.BooksFragment
 import com.szlachta.medialibrary.ui.form.FormActivity
-import com.szlachta.medialibrary.ui.games.GamesFragment
-import com.szlachta.medialibrary.ui.movies.MoviesFragment
+import com.szlachta.medialibrary.ui.home.games.GamesFragment
+import com.szlachta.medialibrary.ui.home.movies.MoviesFragment
 import com.szlachta.medialibrary.ui.profile.ProfileActivity
 import com.szlachta.medialibrary.ui.search.SearchActivity
 import kotlinx.android.synthetic.main.activity_home.*

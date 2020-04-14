@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.SignInActivity" />
-        <activity android:name=".ui.HomeActivity" />
+        <activity android:name=".ui.home.HomeActivity" />
         <activity android:name=".ui.form.FormActivity" />
         <activity
             android:name=".ui.search.SearchActivity"
