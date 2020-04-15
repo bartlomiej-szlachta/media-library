@@ -5,4 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.games.GamesPlannedFragment">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Games planned" />
 </FrameLayout>
