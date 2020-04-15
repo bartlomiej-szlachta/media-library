@@ -55,6 +55,7 @@ class HomeActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         pager_home.adapter = HomePagerAdapter(this)
+        pager_home.isUserInputEnabled = false
 
         action_bar_home.setOnClickListener(actionBarOnClickListener)
         floating_action_button_add.setOnClickListener(floatingActionButtonOnClickListener)
