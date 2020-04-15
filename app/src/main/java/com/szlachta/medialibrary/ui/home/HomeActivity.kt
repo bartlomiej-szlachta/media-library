@@ -8,13 +8,10 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.auth.FirebaseAuth
-import com.szlachta.medialibrary.model.ItemTypeEnum
 import com.szlachta.medialibrary.R
+import com.szlachta.medialibrary.ui.ItemTypeEnum
 import com.szlachta.medialibrary.ui.SignInActivity
-import com.szlachta.medialibrary.ui.home.books.BooksFragment
 import com.szlachta.medialibrary.ui.form.FormActivity
-import com.szlachta.medialibrary.ui.home.games.GamesFragment
-import com.szlachta.medialibrary.ui.home.movies.MoviesFragment
 import com.szlachta.medialibrary.ui.profile.ProfileActivity
 import com.szlachta.medialibrary.ui.search.SearchActivity
 import kotlinx.android.synthetic.main.activity_home.*
@@ -34,6 +31,8 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         setContentView(R.layout.activity_home)
+
+        pager_home.adapter = HomePagerAdapter(this)
 
         setSupportActionBar(action_bar_home)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -86,31 +85,19 @@ class HomeActivity : AppCompatActivity() {
         R.id.action_games -> {
             currentItem = ItemTypeEnum.GAMES
             action_bar_home_title.text = getString(R.string.search_games)
-            supportFragmentManager.beginTransaction()
-// TODO: .setCustomAnimations()
-// TODO: show / hide instead of replace
-                .replace(R.id.fragment_container, GamesFragment())
-                .commit()
+            pager_home.currentItem = ItemTypeEnum.GAMES.position
             true
         }
         R.id.action_movies -> {
             currentItem = ItemTypeEnum.MOVIES
             action_bar_home_title.text = getString(R.string.search_movies)
-            supportFragmentManager.beginTransaction()
-// TODO: .setCustomAnimations()
-// TODO: show / hide instead of replace
-                .replace(R.id.fragment_container, MoviesFragment())
-                .commit()
+            pager_home.currentItem = ItemTypeEnum.MOVIES.position
             true
         }
         R.id.action_books -> {
             currentItem = ItemTypeEnum.BOOKS
             action_bar_home_title.text = getString(R.string.search_books)
-            supportFragmentManager.beginTransaction()
-// TODO: .setCustomAnimations()
-// TODO: show / hide instead of replace
-                .replace(R.id.fragment_container, BooksFragment())
-                .commit()
+            pager_home.currentItem = ItemTypeEnum.BOOKS.position
             true
         }
         else -> false
