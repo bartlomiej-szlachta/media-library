@@ -88,8 +88,10 @@ class SearchActivity : AppCompatActivity(), ImageLoader, OnItemClickListener {
         return true
     }
 
-    override fun loadImage(url: String, into: ImageView) {
-        Glide.with(this).load(url).into(into)
+    override fun loadImage(url: String?, into: ImageView) {
+        if (url != null) {
+            Glide.with(this).load(url).into(into)
+        }
     }
 
     override fun onItemClicked(item: Item) {
