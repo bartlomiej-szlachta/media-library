@@ -28,6 +28,7 @@ import com.szlachta.medialibrary.viewmodel.MoviesViewModel
 import com.szlachta.medialibrary.viewmodel.SearchViewModel
 import kotlinx.android.synthetic.main.activity_search.*
 
+// TODO: use fragment instead of activity to make the moving between this and HomeActivity faster
 class SearchActivity : AppCompatActivity(), ImageLoader, OnItemClickListener {
 
     private lateinit var viewModel: SearchViewModel
