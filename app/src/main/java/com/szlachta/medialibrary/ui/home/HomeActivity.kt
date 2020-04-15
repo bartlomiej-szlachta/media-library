@@ -5,8 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.szlachta.medialibrary.R
 import com.szlachta.medialibrary.ui.ItemTypeEnum
@@ -25,32 +27,38 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    private val actionBarOnClickListener = View.OnClickListener {
+        val currentItem: ItemTypeEnum = ItemTypeEnum.values()[pager_home.currentItem]
+        val intent: Intent = Intent(this, SearchActivity::class.java)
+            .putExtra(CURRENT_ITEM_EXTRA, currentItem)
+        startActivity(intent)
+    }
+
+    private val floatingActionButtonOnClickListener = View.OnClickListener {
+        startActivity(Intent(this, FormActivity::class.java))
+    }
+
+    private val navigationItemOnClickListener =
+        BottomNavigationView.OnNavigationItemSelectedListener {
+            if (bottom_navigation.selectedItemId == it.itemId) {
+                return@OnNavigationItemSelectedListener false
+            }
+            handleBottomTabSelection(it.itemId)
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         setContentView(R.layout.activity_home)
 
-        pager_home.adapter = HomePagerAdapter(this)
-
         setSupportActionBar(action_bar_home)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        action_bar_home.setOnClickListener {
-            val currentItem: ItemTypeEnum = ItemTypeEnum.values()[pager_home.currentItem]
-            val intent: Intent = Intent(this, SearchActivity::class.java)
-                .putExtra(CURRENT_ITEM_EXTRA, currentItem)
-            startActivity(intent)
-        }
 
-        bottom_navigation.setOnNavigationItemSelectedListener {
-            if (bottom_navigation.selectedItemId == it.itemId) {
-                return@setOnNavigationItemSelectedListener false
-            }
-            handleBottomTabSelection(it.itemId)
-        }
+        pager_home.adapter = HomePagerAdapter(this)
 
-        floating_action_button_add.setOnClickListener {
-            startActivity(Intent(this, FormActivity::class.java))
-        }
+        action_bar_home.setOnClickListener(actionBarOnClickListener)
+        floating_action_button_add.setOnClickListener(floatingActionButtonOnClickListener)
+        bottom_navigation.setOnNavigationItemSelectedListener(navigationItemOnClickListener)
     }
 
     override fun onResume() {
