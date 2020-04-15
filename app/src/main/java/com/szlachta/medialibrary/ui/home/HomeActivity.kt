@@ -61,6 +61,7 @@ class HomeActivity : AppCompatActivity() {
         bottom_navigation.setOnNavigationItemSelectedListener(navigationItemOnClickListener)
     }
 
+    // TODO: make sure it's necessary
     override fun onResume() {
         super.onResume()
         handleBottomTabSelection(bottom_navigation.selectedItemId)
