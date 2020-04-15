@@ -93,17 +93,17 @@ class HomeActivity : AppCompatActivity() {
     private fun handleBottomTabSelection(actionId: Int): Boolean = when (actionId) {
         R.id.action_games -> {
             action_bar_home_title.text = getString(R.string.search_games)
-            pager_home.currentItem = ItemTypeEnum.GAMES.position
+            pager_home.setCurrentItem(ItemTypeEnum.GAMES.position, false)
             true
         }
         R.id.action_movies -> {
             action_bar_home_title.text = getString(R.string.search_movies)
-            pager_home.currentItem = ItemTypeEnum.MOVIES.position
+            pager_home.setCurrentItem(ItemTypeEnum.MOVIES.position, false)
             true
         }
         R.id.action_books -> {
             action_bar_home_title.text = getString(R.string.search_books)
-            pager_home.currentItem = ItemTypeEnum.BOOKS.position
+            pager_home.setCurrentItem(ItemTypeEnum.BOOKS.position, false)
             true
         }
         else -> false
