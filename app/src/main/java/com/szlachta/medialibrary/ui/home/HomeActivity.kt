@@ -25,8 +25,6 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private lateinit var currentItem: ItemTypeEnum
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -37,7 +35,8 @@ class HomeActivity : AppCompatActivity() {
         setSupportActionBar(action_bar_home)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         action_bar_home.setOnClickListener {
-            val intent = Intent(this, SearchActivity::class.java)
+            val currentItem: ItemTypeEnum = ItemTypeEnum.values()[pager_home.currentItem]
+            val intent: Intent = Intent(this, SearchActivity::class.java)
                 .putExtra(CURRENT_ITEM_EXTRA, currentItem)
             startActivity(intent)
         }
@@ -83,19 +82,16 @@ class HomeActivity : AppCompatActivity() {
 
     private fun handleBottomTabSelection(actionId: Int): Boolean = when (actionId) {
         R.id.action_games -> {
-            currentItem = ItemTypeEnum.GAMES
             action_bar_home_title.text = getString(R.string.search_games)
             pager_home.currentItem = ItemTypeEnum.GAMES.position
             true
         }
         R.id.action_movies -> {
-            currentItem = ItemTypeEnum.MOVIES
             action_bar_home_title.text = getString(R.string.search_movies)
             pager_home.currentItem = ItemTypeEnum.MOVIES.position
             true
         }
         R.id.action_books -> {
-            currentItem = ItemTypeEnum.BOOKS
             action_bar_home_title.text = getString(R.string.search_books)
             pager_home.currentItem = ItemTypeEnum.BOOKS.position
             true
