@@ -22,6 +22,8 @@ import com.szlachta.medialibrary.ui.home.HomeActivity
 import com.szlachta.medialibrary.ui.list.ImageLoader
 import com.szlachta.medialibrary.ui.list.ListAdapter
 import com.szlachta.medialibrary.ui.list.OnItemClickListener
+import com.szlachta.medialibrary.viewmodel.BooksViewModel
+import com.szlachta.medialibrary.viewmodel.GamesViewModel
 import com.szlachta.medialibrary.viewmodel.MoviesViewModel
 import com.szlachta.medialibrary.viewmodel.SearchViewModel
 import kotlinx.android.synthetic.main.activity_search.*
@@ -39,9 +41,10 @@ class SearchActivity : AppCompatActivity(), ImageLoader, OnItemClickListener {
         setSupportActionBar(action_bar_search)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val currentItem =
-            intent.getSerializableExtra(HomeActivity.CURRENT_ITEM_EXTRA) as ItemTypeEnum
-        initializeViewModel(currentItem)
+        val currentItem = intent
+            .getSerializableExtra(HomeActivity.CURRENT_ITEM_EXTRA) as ItemTypeEnum
+        viewModel = getViewModel(currentItem)
+
         setHint(currentItem)
 
         rv_search_list.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
@@ -99,17 +102,10 @@ class SearchActivity : AppCompatActivity(), ImageLoader, OnItemClickListener {
         Toast.makeText(this, item.title, Toast.LENGTH_SHORT).show()
     }
 
-    private fun initializeViewModel(itemType: ItemTypeEnum) {
-        viewModel = when (itemType) {
-            ItemTypeEnum.MOVIES -> ViewModelProvider(this).get(MoviesViewModel::class.java)
-            else -> {
-                // TODO: implement other data types search
-                onFinishTyping()
-                Toast.makeText(this, "Try searching movies", Toast.LENGTH_SHORT).show()
-                finish()
-                ViewModelProvider(this).get(MoviesViewModel::class.java)
-            }
-        }
+    private fun getViewModel(itemType: ItemTypeEnum): SearchViewModel = when (itemType) {
+        ItemTypeEnum.GAMES -> ViewModelProvider(this).get(GamesViewModel::class.java)
+        ItemTypeEnum.MOVIES -> ViewModelProvider(this).get(MoviesViewModel::class.java)
+        ItemTypeEnum.BOOKS -> ViewModelProvider(this).get(BooksViewModel::class.java)
     }
 
     private fun setHint(itemType: ItemTypeEnum) {
