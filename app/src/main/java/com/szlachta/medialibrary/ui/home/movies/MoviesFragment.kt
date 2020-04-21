@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayoutMediator
 import com.szlachta.medialibrary.R
 import com.szlachta.medialibrary.ui.ItemStatusEnum
+import com.szlachta.medialibrary.ui.home.tabs.TabsPagerAdapter
 import kotlinx.android.synthetic.main.fragment_movies.*
 
 class MoviesFragment : Fragment() {
@@ -22,7 +23,7 @@ class MoviesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        pager_movies.adapter = MoviesPagerAdapter(this)
+        pager_movies.adapter = TabsPagerAdapter(this)
         TabLayoutMediator(tabs_movies, pager_movies) { tab, position ->
             tab.text = getTabTitle(position)
         }.attach()

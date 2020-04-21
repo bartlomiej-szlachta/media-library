@@ -1,4 +1,4 @@
-package com.szlachta.medialibrary.ui.home.books
+package com.szlachta.medialibrary.ui.home.tabs
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,13 +8,13 @@ import android.view.ViewGroup
 
 import com.szlachta.medialibrary.R
 
-class BooksPlannedFragment : Fragment() {
+class TabFinishedFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_books_planned, container, false)
+        return inflater.inflate(R.layout.fragment_tab_finished, container, false)
     }
 
 }
