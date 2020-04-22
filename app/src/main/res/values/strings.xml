@@ -9,7 +9,16 @@
     <string name="search_games">Search games</string>
     <string name="search_movies">Search movies</string>
     <string name="search_books">Search books</string>
+    <string name="title_form_create">Add</string>
+    <string name="title_form_edit">Edit</string>
+    <string name="title_form_game">game</string>
+    <string name="title_form_movie">movie</string>
+    <string name="title_form_book">book</string>
     <string name="hint_title">Title</string>
+    <string name="hint_year">Year</string>
+    <string name="error_title_required">Title is required</string>
+    <string name="error_year_required">Year is required</string>
+    <string name="error_year_invalid">Year is incorrect</string>
     <string name="action_form_save">Save</string>
     <string name="action_profile">Profile</string>
     <string name="description_profile_image">Profile image</string>

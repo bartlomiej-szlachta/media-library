@@ -26,13 +26,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        app:errorEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/action_bar_form"
         app:layout_constraintVertical_bias="0.05">
 
-        <!-- TODO: autofillHints enable -->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_title"
             android:layout_width="match_parent"
@@ -40,6 +40,31 @@
             android:autofillHints="title"
             android:hint="@string/hint_title"
             android:inputType="textPersonName|textCapWords" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_year_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_title_layout"
+        app:layout_constraintVertical_bias="0.0"
+        app:startIconContentDescription="@string/hint_year"
+        app:startIconDrawable="@drawable/ic_date_range">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="year"
+            android:hint="@string/hint_year"
+            android:inputType="number"
+            android:maxLength="4" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,7 @@ import com.szlachta.medialibrary.R
 import com.szlachta.medialibrary.ui.ItemTypeEnum
 import com.szlachta.medialibrary.ui.SignInActivity
 import com.szlachta.medialibrary.ui.form.FormActivity
+import com.szlachta.medialibrary.ui.form.FormModeEnum
 import com.szlachta.medialibrary.ui.profile.ProfileActivity
 import com.szlachta.medialibrary.ui.search.SearchActivity
 import kotlinx.android.synthetic.main.activity_home.*
@@ -28,14 +29,16 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private val actionBarOnClickListener = View.OnClickListener {
-        val currentItem: ItemTypeEnum = ItemTypeEnum.values()[pager_home.currentItem]
         val intent: Intent = Intent(this, SearchActivity::class.java)
-            .putExtra(CURRENT_ITEM_EXTRA, currentItem)
+            .putExtra(CURRENT_ITEM_EXTRA, getCurrentItem())
         startActivity(intent)
     }
 
     private val floatingActionButtonOnClickListener = View.OnClickListener {
-        startActivity(Intent(this, FormActivity::class.java))
+        val intent = Intent(this, FormActivity::class.java)
+            .putExtra(FormActivity.MODE_EXTRA, FormModeEnum.CREATE)
+            .putExtra(CURRENT_ITEM_EXTRA, getCurrentItem())
+        startActivity(intent)
     }
 
     private val navigationItemOnClickListener =
@@ -114,4 +117,6 @@ class HomeActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().signOut()
         finish()
     }
+
+    private fun getCurrentItem(): ItemTypeEnum = ItemTypeEnum.values()[pager_home.currentItem]
 }
