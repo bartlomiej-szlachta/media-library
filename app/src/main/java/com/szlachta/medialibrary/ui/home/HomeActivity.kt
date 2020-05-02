@@ -57,7 +57,7 @@ class HomeActivity : AppCompatActivity() {
         setSupportActionBar(action_bar_home)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        pager_home.adapter = HomePagerAdapter(this)
+        pager_home.adapter = BottomNavigationPagerAdapter(this)
         pager_home.isUserInputEnabled = false
 
         action_bar_home.setOnClickListener(actionBarOnClickListener)
