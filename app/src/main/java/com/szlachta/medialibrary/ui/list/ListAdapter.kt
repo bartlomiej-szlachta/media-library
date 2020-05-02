@@ -30,13 +30,13 @@ class ListAdapter(
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private var itemId: String? = null
+        private var itemRemoteId: String? = null
         private val itemTitle: TextView = itemView.findViewById(R.id.text_item_title)
         private val itemYear: TextView = itemView.findViewById(R.id.text_item_year)
         private val itemImage: ImageView = itemView.findViewById(R.id.image_item)
 
         fun bind(item: Item, clickListener: OnItemClickListener) {
-            itemId = item.id
+            itemRemoteId = item.remoteId
             itemTitle.text = item.title
             itemYear.text = item.year.toString()
             imageLoader.loadImage(item.imageUrl, itemImage)

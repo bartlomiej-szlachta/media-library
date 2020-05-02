@@ -7,9 +7,14 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.szlachta.medialibrary.R
+import com.szlachta.medialibrary.model.Item
 import com.szlachta.medialibrary.ui.ItemTypeEnum
 import com.szlachta.medialibrary.ui.home.HomeActivity
 import kotlinx.android.synthetic.main.activity_form.*
@@ -23,6 +28,7 @@ class FormActivity : AppCompatActivity() {
 
     private lateinit var mode: FormModeEnum
     private lateinit var itemType: ItemTypeEnum
+    private lateinit var database: DatabaseReference
 
     private var isTitleTouched: Boolean = false
     private var isYearTouched: Boolean = false
@@ -68,6 +74,7 @@ class FormActivity : AppCompatActivity() {
 
         mode = intent.getSerializableExtra(MODE_EXTRA) as FormModeEnum
         itemType = intent.getSerializableExtra(HomeActivity.CURRENT_ITEM_EXTRA) as ItemTypeEnum
+        database = Firebase.database.reference
 
         setSupportActionBar(action_bar_form)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -92,7 +99,17 @@ class FormActivity : AppCompatActivity() {
                 val isYearCorrect = checkIfYearCorrect(input_year.text.toString())
 
                 if (isTitleCorrect && isYearCorrect) {
-                    finish()
+                    val newItem = object : Item {
+                        override val remoteId: String?
+                            get() = null
+                        override val title: String
+                            get() = input_title.text.toString()
+                        override val year: Int
+                            get() = input_year.text.toString().toInt()
+                        override val imageUrl: String?
+                            get() = null
+                    }
+                    saveData(newItem)
                 }
 
                 true
@@ -145,5 +162,17 @@ class FormActivity : AppCompatActivity() {
 
         input_year_layout.error = null
         return true
+    }
+
+    private fun saveData(item: Item) {
+        val key = database.child("items").push().key!!
+        database.child("items").child(key).setValue(item)
+            .addOnCanceledListener {
+                Toast.makeText(this, "Operation rejected", Toast.LENGTH_SHORT).show()
+            }
+            .addOnCompleteListener {
+                Toast.makeText(this, "Item created", Toast.LENGTH_SHORT).show()
+                finish()
+            }
     }
 }

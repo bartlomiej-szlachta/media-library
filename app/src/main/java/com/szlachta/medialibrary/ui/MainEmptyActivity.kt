@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.szlachta.medialibrary.ui.home.HomeActivity
 
 class MainEmptyActivity : AppCompatActivity() {
@@ -18,6 +20,8 @@ class MainEmptyActivity : AppCompatActivity() {
         } else {
             HomeActivity.getLaunchIntent(this)
         }
+
+        Firebase.database.setPersistenceEnabled(true)
 
         startActivity(intent)
         finish()
