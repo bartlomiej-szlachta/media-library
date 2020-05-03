@@ -1,9 +1,9 @@
 package com.szlachta.medialibrary.model
 
-interface Item {
-    val firebaseId: String?
-    val remoteId: String?
-    val title: String
-    val year: Int
-    val imageUrl: String?
-}
+open class Item (
+    open val title: String,
+    open val firebaseId: String? = null,
+    open val remoteId: String? = null,
+    open val year: Int? = null,
+    open val imageUrl: String? = null
+)

@@ -17,7 +17,6 @@
     <string name="hint_title">Title</string>
     <string name="hint_year">Year</string>
     <string name="error_title_required">Title is required</string>
-    <string name="error_year_required">Year is required</string>
     <string name="error_year_invalid">Year is incorrect</string>
     <string name="action_form_save">Save</string>
     <string name="action_profile">Profile</string>

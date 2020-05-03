@@ -38,7 +38,7 @@ class ListAdapter(
         fun bind(item: Item, clickListener: OnItemClickListener) {
             itemRemoteId = item.remoteId
             itemTitle.text = item.title
-            itemYear.text = item.year.toString()
+            itemYear.text = item.year?.toString()
             imageLoader.loadImage(item.imageUrl, itemImage)
             itemView.setOnClickListener { clickListener.onItemClicked(item) }
         }

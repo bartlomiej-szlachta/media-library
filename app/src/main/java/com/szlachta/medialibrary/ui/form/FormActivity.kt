@@ -99,18 +99,15 @@ class FormActivity : AppCompatActivity() {
                 val isYearCorrect = checkIfYearCorrect(input_year.text.toString())
 
                 if (isTitleCorrect && isYearCorrect) {
-                    val newItem = object : Item {
-                        override val firebaseId: String?
-                            get() = null
-                        override val remoteId: String?
-                            get() = null
-                        override val title: String
-                            get() = input_title.text.toString()
-                        override val year: Int
-                            get() = input_year.text.toString().toInt()
-                        override val imageUrl: String?
-                            get() = null
+                    val year = if (input_year.text.isNullOrEmpty()) {
+                        null
+                    } else {
+                        input_year.text.toString().toInt()
                     }
+                    val newItem = Item(
+                        input_title.text.toString(),
+                        year = year
+                    )
                     saveData(newItem)
                 }
 
@@ -153,8 +150,8 @@ class FormActivity : AppCompatActivity() {
         isYearTouched = true
 
         if (year.isEmpty()) {
-            input_year_layout.error = getString(R.string.error_year_required)
-            return false
+            input_year_layout.error = null
+            return true
         }
 
         if (year.toInt() < 1450 || year.toInt() > Calendar.getInstance().get(Calendar.YEAR)) {
@@ -167,8 +164,8 @@ class FormActivity : AppCompatActivity() {
     }
 
     private fun saveData(item: Item) {
-        val key = database.child("items").push().key!!
-        database.child("items").child(key).setValue(item)
+        val key = database.child(itemType.key).push().key!!
+        database.child(itemType.key).child(key).setValue(item)
             .addOnCanceledListener {
                 Toast.makeText(this, "Operation rejected", Toast.LENGTH_SHORT).show()
             }

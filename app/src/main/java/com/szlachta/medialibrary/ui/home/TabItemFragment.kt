@@ -37,18 +37,13 @@ class TabItemFragment : Fragment() {
                 p0.value as Map<String, Map<String, Any>>? ?: emptyMap()
 
             val list = data.entries.stream().map {
-                object : Item {
-                    override val firebaseId: String?
-                        get() = it.key
-                    override val remoteId: String?
-                        get() = it.value["remoteId"] as String?
-                    override val title: String
-                        get() = it.value["title"] as String
-                    override val year: Int
-                        get() = it.value["year"].toString().toInt()
-                    override val imageUrl: String?
-                        get() = it.value["imageUrl"] as String?
-                }
+                Item(
+                    title = it.value["title"] as String,
+                    firebaseId = it.key,
+                    remoteId = it.value["remoteId"] as String?,
+                    year = it.value["year"]?.toString()?.toInt(),
+                    imageUrl = it.value["imageUrl"] as String?
+                )
             }.collect(Collectors.toList())
 
             rv_items_list.layoutManager =
