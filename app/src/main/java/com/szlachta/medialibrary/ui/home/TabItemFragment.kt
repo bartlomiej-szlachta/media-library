@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -13,22 +17,57 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.szlachta.medialibrary.R
+import com.szlachta.medialibrary.model.Item
 import com.szlachta.medialibrary.ui.ItemStatusEnum
 import com.szlachta.medialibrary.ui.ItemTypeEnum
-import kotlinx.android.synthetic.main.fragment_tab_item.text_view
+import com.szlachta.medialibrary.ui.list.ImageLoader
+import com.szlachta.medialibrary.ui.list.ListAdapter
+import com.szlachta.medialibrary.ui.list.OnItemClickListener
+import kotlinx.android.synthetic.main.fragment_tab_item.rv_items_list
+import java.util.stream.Collectors
 
 class TabItemFragment : Fragment() {
     private lateinit var itemType: ItemTypeEnum
     private lateinit var itemStatus: ItemStatusEnum
     private lateinit var database: DatabaseReference
 
-    private val valueEventListener = object : ValueEventListener {
+    private val valueEventListener = object : ValueEventListener, OnItemClickListener, ImageLoader {
         override fun onDataChange(p0: DataSnapshot) {
-            text_view.text = p0.value.toString()
+            @Suppress("UNCHECKED_CAST") val data: Map<String, Map<String, Any>> =
+                p0.value as Map<String, Map<String, Any>>? ?: emptyMap()
+
+            val list = data.entries.stream().map {
+                object : Item {
+                    override val firebaseId: String?
+                        get() = it.key
+                    override val remoteId: String?
+                        get() = it.value["remoteId"] as String?
+                    override val title: String
+                        get() = it.value["title"] as String
+                    override val year: Int
+                        get() = it.value["year"].toString().toInt()
+                    override val imageUrl: String?
+                        get() = it.value["imageUrl"] as String?
+                }
+            }.collect(Collectors.toList())
+
+            rv_items_list.layoutManager =
+                LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+            rv_items_list.adapter = ListAdapter(list, this, this)
         }
 
         override fun onCancelled(p0: DatabaseError) {
             Toast.makeText(activity, p0.message, Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onItemClicked(item: Item) {
+            Toast.makeText(activity, item.title, Toast.LENGTH_SHORT).show()
+        }
+
+        override fun loadImage(url: String?, into: ImageView) {
+            if (url != null) {
+                Glide.with(activity!!).load(url).into(into)
+            }
         }
     }
 

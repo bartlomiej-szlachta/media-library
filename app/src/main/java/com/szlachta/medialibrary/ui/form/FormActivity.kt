@@ -100,6 +100,8 @@ class FormActivity : AppCompatActivity() {
 
                 if (isTitleCorrect && isYearCorrect) {
                     val newItem = object : Item {
+                        override val firebaseId: String?
+                            get() = null
                         override val remoteId: String?
                             get() = null
                         override val title: String
