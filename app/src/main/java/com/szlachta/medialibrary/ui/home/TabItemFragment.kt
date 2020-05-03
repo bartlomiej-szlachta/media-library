@@ -16,10 +16,9 @@ import com.szlachta.medialibrary.ui.ItemStatusEnum
 import com.szlachta.medialibrary.ui.ItemTypeEnum
 import kotlinx.android.synthetic.main.fragment_tab_item.text_view
 
-class TabItemFragment(
-    private val itemType: ItemTypeEnum,
-    private val itemStatus: ItemStatusEnum
-) : Fragment() {
+class TabItemFragment : Fragment() {
+    private lateinit var itemType: ItemTypeEnum
+    private lateinit var itemStatus: ItemStatusEnum
 
     private val valueEventListener = object : ValueEventListener {
         override fun onDataChange(p0: DataSnapshot) {
@@ -40,7 +39,15 @@ class TabItemFragment(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        arguments
+            ?.takeIf { it.containsKey(ItemTypeEnum.ARG) }
+            ?.apply {
+                itemType = getSerializable(ItemTypeEnum.ARG) as ItemTypeEnum
+            }
+            ?.takeIf { it.containsKey(ItemStatusEnum.ARG) }
+            ?.apply {
+                itemStatus = getSerializable(ItemStatusEnum.ARG) as ItemStatusEnum
+            }
         Firebase.database.reference.child(itemType.key).addValueEventListener(valueEventListener)
     }
 }
