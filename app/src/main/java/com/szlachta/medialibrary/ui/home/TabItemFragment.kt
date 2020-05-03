@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_tab_item.text_view
 class TabItemFragment : Fragment() {
     private lateinit var itemType: ItemTypeEnum
     private lateinit var itemStatus: ItemStatusEnum
+    private lateinit var database: DatabaseReference
 
     private val valueEventListener = object : ValueEventListener {
         override fun onDataChange(p0: DataSnapshot) {
@@ -48,6 +50,12 @@ class TabItemFragment : Fragment() {
             ?.apply {
                 itemStatus = getSerializable(ItemStatusEnum.ARG) as ItemStatusEnum
             }
-        Firebase.database.reference.child(itemType.key).addValueEventListener(valueEventListener)
+        database = Firebase.database.reference.child(itemType.key)
+        database.addValueEventListener(valueEventListener)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        database.removeEventListener(valueEventListener)
     }
 }
