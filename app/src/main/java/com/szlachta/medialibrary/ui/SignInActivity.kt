@@ -6,16 +6,19 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
 import com.szlachta.medialibrary.R
 import com.szlachta.medialibrary.ui.home.HomeActivity
+import com.szlachta.medialibrary.viewmodel.AuthViewModel
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignInActivity : AppCompatActivity() {
@@ -27,27 +30,21 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    private lateinit var googleSignInOptions: GoogleSignInOptions
+    private val viewModel: AuthViewModel by lazy {
+        ViewModelProvider(this).get(AuthViewModel::class.java)
+    }
+
     private lateinit var googleSignInClient: GoogleSignInClient
-    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         setContentView(R.layout.activity_sign_in)
 
-        googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-        googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
-        googleSignInClient.revokeAccess()
-        firebaseAuth = FirebaseAuth.getInstance()
+        initializeGoogleSignInClient()
 
         button_sign_in.setOnClickListener {
-            startActivityForResult(googleSignInClient.signInIntent,
-                RC_SIGN_IN
-            )
+            startActivityForResult(googleSignInClient.signInIntent, RC_SIGN_IN)
         }
     }
 
@@ -65,23 +62,31 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
+    private fun initializeGoogleSignInClient() {
+        val googleSignInOptions: GoogleSignInOptions = GoogleSignInOptions
+            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
+        googleSignInClient.revokeAccess()
+    }
+
     private fun firebaseAuthWithGoogle(googleSignInAccount: GoogleSignInAccount) {
-        val credential = GoogleAuthProvider.getCredential(googleSignInAccount.idToken, null)
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
-            if (it.isSuccessful) {
+        val credential: AuthCredential = GoogleAuthProvider
+            .getCredential(googleSignInAccount.idToken, null)
+        viewModel.signInWithGoogle(credential).observe(this, Observer {
+            if (it.success) {
                 onSignedIn()
             } else {
                 onRejected()
             }
-        }
+        })
     }
 
     private fun onSignedIn() {
-        startActivity(
-            HomeActivity.getLaunchIntent(
-                this
-            )
-        )
+        val intent = HomeActivity.getLaunchIntent(this)
+        startActivity(intent)
         finish()
     }
 

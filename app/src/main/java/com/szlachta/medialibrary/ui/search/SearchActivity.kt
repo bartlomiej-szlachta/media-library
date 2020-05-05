@@ -17,21 +17,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.szlachta.medialibrary.R
 import com.szlachta.medialibrary.model.Item
-import com.szlachta.medialibrary.ui.ItemTypeEnum
-import com.szlachta.medialibrary.ui.home.HomeActivity
+import com.szlachta.medialibrary.model.ItemTypeEnum
 import com.szlachta.medialibrary.ui.list.ImageLoader
 import com.szlachta.medialibrary.ui.list.ListAdapter
 import com.szlachta.medialibrary.ui.list.OnItemClickListener
-import com.szlachta.medialibrary.viewmodel.BooksViewModel
-import com.szlachta.medialibrary.viewmodel.GamesViewModel
-import com.szlachta.medialibrary.viewmodel.MoviesViewModel
 import com.szlachta.medialibrary.viewmodel.SearchViewModel
-import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.android.synthetic.main.activity_search.action_bar_search
+import kotlinx.android.synthetic.main.activity_search.input_search_query
+import kotlinx.android.synthetic.main.activity_search.rv_search_list
 
 // TODO: use fragment instead of activity to make the moving between this and HomeActivity faster
 class SearchActivity : AppCompatActivity(), ImageLoader, OnItemClickListener {
 
-    private lateinit var viewModel: SearchViewModel
+    private val viewModel: SearchViewModel by lazy {
+        ViewModelProvider(this).get(SearchViewModel::class.java)
+    }
+
+    private lateinit var itemType: ItemTypeEnum
+
     private var isClearIconVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,11 +45,9 @@ class SearchActivity : AppCompatActivity(), ImageLoader, OnItemClickListener {
         setSupportActionBar(action_bar_search)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val currentItem = intent
-            .getSerializableExtra(HomeActivity.CURRENT_ITEM_EXTRA) as ItemTypeEnum
-        viewModel = getViewModel(currentItem)
+        itemType = intent.getSerializableExtra(ItemTypeEnum.ARG) as ItemTypeEnum
 
-        setHint(currentItem)
+        setHint(itemType)
 
         rv_search_list.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         rv_search_list.adapter = ListAdapter(emptyList(), this, this)
@@ -103,12 +104,6 @@ class SearchActivity : AppCompatActivity(), ImageLoader, OnItemClickListener {
         Toast.makeText(this, item.title, Toast.LENGTH_SHORT).show()
     }
 
-    private fun getViewModel(itemType: ItemTypeEnum): SearchViewModel = when (itemType) {
-        ItemTypeEnum.GAMES -> ViewModelProvider(this).get(GamesViewModel::class.java)
-        ItemTypeEnum.MOVIES -> ViewModelProvider(this).get(MoviesViewModel::class.java)
-        ItemTypeEnum.BOOKS -> ViewModelProvider(this).get(BooksViewModel::class.java)
-    }
-
     private fun setHint(itemType: ItemTypeEnum) {
         input_search_query.hint = when (itemType) {
             ItemTypeEnum.GAMES -> getString(R.string.search_games)
@@ -153,7 +148,7 @@ class SearchActivity : AppCompatActivity(), ImageLoader, OnItemClickListener {
     }
 
     private fun requestMoviesList(movieQuery: String) {
-        viewModel.getItemsList(movieQuery).observe(this,
+        viewModel.getItemsList(movieQuery, itemType).observe(this,
             Observer { t ->
                 if (t.items != null) {
                     rv_search_list.adapter = ListAdapter(t.items!!, this, this)

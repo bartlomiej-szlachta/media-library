@@ -1,4 +1,4 @@
-package com.szlachta.medialibrary.ui
+package com.szlachta.medialibrary.model
 
 enum class ItemStatusEnum(val position: Int, val key: String) {
     PLANNED(0, "planned"),

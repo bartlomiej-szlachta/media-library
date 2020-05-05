@@ -10,24 +10,23 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import com.google.firebase.database.DatabaseReference
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.szlachta.medialibrary.R
-import com.szlachta.medialibrary.firebase.FirebaseProvider
 import com.szlachta.medialibrary.model.Item
-import com.szlachta.medialibrary.ui.ItemTypeEnum
-import com.szlachta.medialibrary.ui.home.HomeActivity
+import com.szlachta.medialibrary.model.ItemTypeEnum
+import com.szlachta.medialibrary.viewmodel.DatabaseViewModel
 import kotlinx.android.synthetic.main.activity_form.*
 import java.util.Calendar
 
 class FormActivity : AppCompatActivity() {
 
-    companion object {
-        const val MODE_EXTRA = "mode_extra"
+    private val viewModel: DatabaseViewModel by lazy {
+        ViewModelProvider(this).get(DatabaseViewModel::class.java)
     }
 
     private lateinit var mode: FormModeEnum
     private lateinit var itemType: ItemTypeEnum
-    private lateinit var database: DatabaseReference
 
     private var isTitleTouched: Boolean = false
     private var isYearTouched: Boolean = false
@@ -71,9 +70,8 @@ class FormActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         setContentView(R.layout.activity_form)
 
-        mode = intent.getSerializableExtra(MODE_EXTRA) as FormModeEnum
-        itemType = intent.getSerializableExtra(HomeActivity.CURRENT_ITEM_EXTRA) as ItemTypeEnum
-        database = FirebaseProvider.getDatabase().child(itemType.key)
+        mode = intent.getSerializableExtra(FormModeEnum.ARG) as FormModeEnum
+        itemType = intent.getSerializableExtra(ItemTypeEnum.ARG) as ItemTypeEnum
 
         setSupportActionBar(action_bar_form)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -104,7 +102,7 @@ class FormActivity : AppCompatActivity() {
                         input_year.text.toString().toInt()
                     }
                     val newItem = Item(
-                        input_title.text.toString(),
+                        title = input_title.text.toString(),
                         year = year
                     )
                     saveData(newItem)
@@ -163,14 +161,13 @@ class FormActivity : AppCompatActivity() {
     }
 
     private fun saveData(item: Item) {
-        val key = database.push().key!!
-        database.child(key).setValue(item)
-            .addOnCanceledListener {
-                Toast.makeText(this, "Operation rejected", Toast.LENGTH_SHORT).show()
-            }
-            .addOnCompleteListener {
+        viewModel.saveItem(item, itemType).observe(this, Observer {
+            if (it.success) {
                 Toast.makeText(this, "Item created", Toast.LENGTH_SHORT).show()
                 finish()
+            } else {
+                Toast.makeText(this, "Operation rejected", Toast.LENGTH_SHORT).show()
             }
+        })
     }
 }

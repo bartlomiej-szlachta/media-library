@@ -1,4 +1,4 @@
-package com.szlachta.medialibrary.ui
+package com.szlachta.medialibrary.model
 
 enum class ItemTypeEnum(val position: Int, val key: String) {
     GAMES(0, "games"),

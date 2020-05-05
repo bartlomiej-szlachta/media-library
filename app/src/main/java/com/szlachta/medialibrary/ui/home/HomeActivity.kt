@@ -8,36 +8,39 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
 import com.szlachta.medialibrary.R
-import com.szlachta.medialibrary.ui.ItemTypeEnum
+import com.szlachta.medialibrary.model.ItemTypeEnum
 import com.szlachta.medialibrary.ui.SignInActivity
 import com.szlachta.medialibrary.ui.form.FormActivity
 import com.szlachta.medialibrary.ui.form.FormModeEnum
 import com.szlachta.medialibrary.ui.profile.ProfileActivity
 import com.szlachta.medialibrary.ui.search.SearchActivity
+import com.szlachta.medialibrary.viewmodel.AuthViewModel
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
     companion object {
-        const val CURRENT_ITEM_EXTRA = "current_item_extra"
-
         fun getLaunchIntent(from: Context) = Intent(from, HomeActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         }
     }
 
+    private val viewModel: AuthViewModel by lazy {
+        ViewModelProvider(this).get(AuthViewModel::class.java)
+    }
+
     private val actionBarOnClickListener = View.OnClickListener {
         val intent: Intent = Intent(this, SearchActivity::class.java)
-            .putExtra(CURRENT_ITEM_EXTRA, getCurrentItem())
+            .putExtra(ItemTypeEnum.ARG, getCurrentItem())
         startActivity(intent)
     }
 
     private val floatingActionButtonOnClickListener = View.OnClickListener {
         val intent = Intent(this, FormActivity::class.java)
-            .putExtra(FormActivity.MODE_EXTRA, FormModeEnum.CREATE)
-            .putExtra(CURRENT_ITEM_EXTRA, getCurrentItem())
+            .putExtra(FormModeEnum.ARG, FormModeEnum.CREATE)
+            .putExtra(ItemTypeEnum.ARG, getCurrentItem())
         startActivity(intent)
     }
 
@@ -66,10 +69,10 @@ class HomeActivity : AppCompatActivity() {
     }
 
     // TODO: make sure it's necessary
-    override fun onResume() {
-        super.onResume()
-        handleBottomTabSelection(bottom_navigation.selectedItemId)
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        handleBottomTabSelection(bottom_navigation.selectedItemId)
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.home_menu, menu)
@@ -113,10 +116,11 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun signOut() {
-        startActivity(SignInActivity.getLaunchIntent(this))
-        FirebaseAuth.getInstance().signOut()
+        val intent = SignInActivity.getLaunchIntent(this)
+        startActivity(intent)
+        viewModel.signOut()
         finish()
     }
 
-    private fun getCurrentItem(): ItemTypeEnum = ItemTypeEnum.values()[pager_home.currentItem]
+    private fun getCurrentItem(): ItemTypeEnum = ItemTypeEnum.getByPosition(pager_home.currentItem)
 }

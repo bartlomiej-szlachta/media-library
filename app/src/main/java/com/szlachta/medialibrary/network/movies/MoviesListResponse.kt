@@ -7,4 +7,8 @@ data class MoviesListResponse(
     @SerializedName("Search") override val items: List<MovieResponse>? = null,
     @SerializedName("totalResults") override val totalElements: Int? = null,
     @SerializedName("Error") override val errorMessage: String? = null
-) : ListResponse
+) : ListResponse(
+    items = items,
+    totalElements = totalElements,
+    errorMessage = errorMessage
+)

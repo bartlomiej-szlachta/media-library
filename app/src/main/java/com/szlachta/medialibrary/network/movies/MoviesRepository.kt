@@ -7,7 +7,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MoviesRepository : SearchRepository {
+class MoviesRepository private constructor() : SearchRepository {
     companion object {
         private var repository: MoviesRepository? = null
 

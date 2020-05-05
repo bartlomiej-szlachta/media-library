@@ -3,8 +3,8 @@ package com.szlachta.medialibrary.ui.home
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.szlachta.medialibrary.ui.ItemStatusEnum
-import com.szlachta.medialibrary.ui.ItemTypeEnum
+import com.szlachta.medialibrary.model.ItemStatusEnum
+import com.szlachta.medialibrary.model.ItemTypeEnum
 
 class TabsPagerAdapter(
     container: Fragment,

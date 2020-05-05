@@ -2,6 +2,7 @@ package com.szlachta.medialibrary.network.movies
 
 import com.google.gson.annotations.SerializedName
 import com.szlachta.medialibrary.model.Item
+import com.szlachta.medialibrary.model.ItemTypeEnum
 
 data class MovieResponse(
     @SerializedName("imdbID") override val remoteId: String,

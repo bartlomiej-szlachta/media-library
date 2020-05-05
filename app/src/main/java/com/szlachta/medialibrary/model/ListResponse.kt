@@ -1,7 +1,7 @@
 package com.szlachta.medialibrary.model
 
-interface ListResponse {
-    val items: List<Item>?
-    val totalElements: Int?
-    val errorMessage: String?
-}
+open class ListResponse(
+    open val items: List<Item>? = null,
+    open val totalElements: Int? = null,
+    open val errorMessage: String? = null
+)

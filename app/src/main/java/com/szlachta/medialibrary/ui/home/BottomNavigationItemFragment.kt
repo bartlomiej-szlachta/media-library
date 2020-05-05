@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.szlachta.medialibrary.R
-import com.szlachta.medialibrary.ui.ItemStatusEnum
-import com.szlachta.medialibrary.ui.ItemTypeEnum
+import com.szlachta.medialibrary.model.ItemStatusEnum
+import com.szlachta.medialibrary.model.ItemTypeEnum
 import kotlinx.android.synthetic.main.fragment_bottom_navigation_item.pager_items
 import kotlinx.android.synthetic.main.fragment_bottom_navigation_item.tabs_items
 
