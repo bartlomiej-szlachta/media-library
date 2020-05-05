@@ -14,9 +14,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.szlachta.medialibrary.R
+import com.szlachta.medialibrary.firebase.FirebaseProvider
 import com.szlachta.medialibrary.model.Item
 import com.szlachta.medialibrary.ui.ItemStatusEnum
 import com.szlachta.medialibrary.ui.ItemTypeEnum
@@ -84,7 +83,7 @@ class TabItemFragment : Fragment() {
             ?.apply {
                 itemStatus = getSerializable(ItemStatusEnum.ARG) as ItemStatusEnum
             }
-        database = Firebase.database.reference.child(itemType.key)
+        database = FirebaseProvider.getDatabase().child(itemType.key)
         database.addValueEventListener(valueEventListener)
     }
 

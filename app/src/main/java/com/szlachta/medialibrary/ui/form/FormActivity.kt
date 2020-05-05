@@ -11,9 +11,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.szlachta.medialibrary.R
+import com.szlachta.medialibrary.firebase.FirebaseProvider
 import com.szlachta.medialibrary.model.Item
 import com.szlachta.medialibrary.ui.ItemTypeEnum
 import com.szlachta.medialibrary.ui.home.HomeActivity
@@ -74,7 +73,7 @@ class FormActivity : AppCompatActivity() {
 
         mode = intent.getSerializableExtra(MODE_EXTRA) as FormModeEnum
         itemType = intent.getSerializableExtra(HomeActivity.CURRENT_ITEM_EXTRA) as ItemTypeEnum
-        database = Firebase.database.reference
+        database = FirebaseProvider.getDatabase().child(itemType.key)
 
         setSupportActionBar(action_bar_form)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -164,8 +163,8 @@ class FormActivity : AppCompatActivity() {
     }
 
     private fun saveData(item: Item) {
-        val key = database.child(itemType.key).push().key!!
-        database.child(itemType.key).child(key).setValue(item)
+        val key = database.push().key!!
+        database.child(key).setValue(item)
             .addOnCanceledListener {
                 Toast.makeText(this, "Operation rejected", Toast.LENGTH_SHORT).show()
             }
