@@ -68,12 +68,6 @@ class HomeActivity : AppCompatActivity() {
         bottom_navigation.setOnNavigationItemSelectedListener(navigationItemOnClickListener)
     }
 
-    // TODO: make sure it's necessary
-//    override fun onResume() {
-//        super.onResume()
-//        handleBottomTabSelection(bottom_navigation.selectedItemId)
-//    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.home_menu, menu)
         return true

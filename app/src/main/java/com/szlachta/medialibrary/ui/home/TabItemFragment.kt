@@ -60,12 +60,6 @@ class TabItemFragment : Fragment(), OnItemClickListener, ImageLoader {
         viewModel.getItemsList(itemType).observe(viewLifecycleOwner, dataObserver)
     }
 
-//    TODO
-//    override fun onDestroy() {
-//        super.onDestroy()
-////        database.removeEventListener(valueEventListener)
-//    }
-
     override fun onItemClicked(item: Item) {
         Toast.makeText(activity, item.title, Toast.LENGTH_SHORT).show()
     }
