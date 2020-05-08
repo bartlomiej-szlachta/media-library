@@ -39,9 +39,9 @@ class BottomNavigationItemFragment : Fragment() {
 
     private fun getTabTitle(position: Int): String {
         return when (position) {
-            ItemStatusEnum.PLANNED.position -> getString(R.string.tab_planned)
-            ItemStatusEnum.IN_PROGRESS.position -> getString(R.string.tab_in_progress)
-            ItemStatusEnum.FINISHED.position -> getString(R.string.tab_finished)
+            ItemStatusEnum.PLANNED.position -> getString(R.string.status_planned)
+            ItemStatusEnum.IN_PROGRESS.position -> getString(R.string.status_in_progress)
+            ItemStatusEnum.FINISHED.position -> getString(R.string.status_finished)
             else -> throw RuntimeException("There is no ItemStatusEnum with position $position")
         }
     }

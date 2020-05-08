@@ -16,6 +16,7 @@
     <string name="title_form_book">book</string>
     <string name="hint_title">Title</string>
     <string name="hint_year">Year</string>
+    <string name="hint_status">Status</string>
     <string name="error_title_required">Title is required</string>
     <string name="error_year_invalid">Year is incorrect</string>
     <string name="action_form_save">Save</string>
@@ -24,7 +25,7 @@
     <string name="button_sign_out">Sign out</string>
     <string name="action_clear">Clear</string>
     <string name="item_image_description">Image</string>
-    <string name="tab_planned">Planned</string>
-    <string name="tab_in_progress">Started</string>
-    <string name="tab_finished">Finished</string>
+    <string name="status_planned">Planned</string>
+    <string name="status_in_progress">Started</string>
+    <string name="status_finished">Finished</string>
 </resources>

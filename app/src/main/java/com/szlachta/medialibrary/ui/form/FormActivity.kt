@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.szlachta.medialibrary.R
 import com.szlachta.medialibrary.model.Item
+import com.szlachta.medialibrary.model.ItemStatusEnum
 import com.szlachta.medialibrary.model.ItemTypeEnum
 import com.szlachta.medialibrary.viewmodel.DatabaseViewModel
 import kotlinx.android.synthetic.main.activity_form.*
@@ -103,7 +104,8 @@ class FormActivity : AppCompatActivity() {
                     }
                     val newItem = Item(
                         title = input_title.text.toString(),
-                        year = year
+                        year = year,
+                        status = getChosenStatus()
                     )
                     saveData(newItem)
                 }
@@ -169,5 +171,14 @@ class FormActivity : AppCompatActivity() {
                 Toast.makeText(this, "Operation rejected", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun getChosenStatus(): ItemStatusEnum? {
+        return when(input_status_chips.checkedChipId) {
+            R.id.input_chip_planned -> ItemStatusEnum.PLANNED
+            R.id.input_chip_in_progress -> ItemStatusEnum.IN_PROGRESS
+            R.id.input_chip_finished -> ItemStatusEnum.FINISHED
+            else -> null
+        }
     }
 }
