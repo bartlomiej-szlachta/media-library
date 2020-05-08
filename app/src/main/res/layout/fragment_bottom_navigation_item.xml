@@ -10,13 +10,16 @@
         android:id="@+id/tabs_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:background="@drawable/layout_bg_tab"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:tabRippleColor="@null">
+        app:tabIndicator="@drawable/indicator_tab"
+        app:tabIndicatorFullWidth="false"
+        app:tabRippleColor="@null"
+        app:tabTextAppearance="@style/TabTextTheme">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_planned"

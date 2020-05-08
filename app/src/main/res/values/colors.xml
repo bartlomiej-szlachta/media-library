@@ -5,6 +5,7 @@
     <color name="colorBackground">#202124</color>
     <color name="colorDialog">#2D2E30</color>
     <color name="colorGreyBackground">#303134</color>
+    <color name="colorLineSeparator">#46474B</color>
     <color name="colorRipple">#828286</color>
     <color name="colorGreyAccents">#9AA0A6</color>
     <color name="colorWhite">#FFFFFF</color>
