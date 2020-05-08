@@ -7,7 +7,7 @@
     tools:context=".ui.home.BottomNavigationItemFragment">
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabs_items"
+        android:id="@+id/tabs_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -16,15 +16,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:tabRippleColor="@null" />
+        app:tabRippleColor="@null">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_planned"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/status_planned" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_in_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/status_in_progress" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_finished"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/status_finished" />
+    </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/pager_items"
+        android:id="@+id/pager_tabs"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabs_items" />
+        app:layout_constraintTop_toBottomOf="@+id/tabs_navigation" />
 </androidx.constraintlayout.widget.ConstraintLayout>

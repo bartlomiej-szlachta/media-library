@@ -5,15 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.android.material.tabs.TabLayoutMediator
+import com.google.android.material.tabs.TabLayout
 import com.szlachta.medialibrary.R
-import com.szlachta.medialibrary.model.ItemStatusEnum
 import com.szlachta.medialibrary.model.ItemTypeEnum
-import kotlinx.android.synthetic.main.fragment_bottom_navigation_item.pager_items
-import kotlinx.android.synthetic.main.fragment_bottom_navigation_item.tabs_items
+import kotlinx.android.synthetic.main.fragment_bottom_navigation_item.pager_tabs
+import kotlinx.android.synthetic.main.fragment_bottom_navigation_item.tabs_navigation
 
 class BottomNavigationItemFragment : Fragment() {
     private lateinit var itemType: ItemTypeEnum
+
+    private val onTabSelectedListener = object : TabLayout.OnTabSelectedListener {
+        override fun onTabReselected(tab: TabLayout.Tab?) {}
+
+        override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+        override fun onTabSelected(tab: TabLayout.Tab?) {
+            pager_tabs.setCurrentItem(tab!!.position, false)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,19 +39,8 @@ class BottomNavigationItemFragment : Fragment() {
             ?.apply {
                 itemType = getSerializable(ItemTypeEnum.ARG) as ItemTypeEnum
             }
-        pager_items.adapter = TabsPagerAdapter(this, itemType)
-        pager_items.isUserInputEnabled = false
-        TabLayoutMediator(tabs_items, pager_items) { tab, position ->
-            tab.text = getTabTitle(position)
-        }.attach()
-    }
-
-    private fun getTabTitle(position: Int): String {
-        return when (position) {
-            ItemStatusEnum.PLANNED.position -> getString(R.string.status_planned)
-            ItemStatusEnum.IN_PROGRESS.position -> getString(R.string.status_in_progress)
-            ItemStatusEnum.FINISHED.position -> getString(R.string.status_finished)
-            else -> throw RuntimeException("There is no ItemStatusEnum with position $position")
-        }
+        pager_tabs.adapter = TabsPagerAdapter(this, itemType)
+        pager_tabs.isUserInputEnabled = false
+        tabs_navigation.addOnTabSelectedListener(onTabSelectedListener)
     }
 }
