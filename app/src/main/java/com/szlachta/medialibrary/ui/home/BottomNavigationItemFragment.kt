@@ -45,4 +45,10 @@ class BottomNavigationItemFragment : Fragment() {
         pager_tabs.isUserInputEnabled = false
         tabs_navigation.addOnTabSelectedListener(onTabSelectedListener)
     }
+
+    // fixes a bug; TODO: fix the bug other way
+    override fun onResume() {
+        super.onResume()
+        tabs_navigation.getTabAt(pager_tabs.currentItem)?.select()
+    }
 }
