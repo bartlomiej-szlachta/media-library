@@ -31,6 +31,7 @@ class BottomNavigationItemFragment : Fragment() {
                 itemType = getSerializable(ItemTypeEnum.ARG) as ItemTypeEnum
             }
         pager_items.adapter = TabsPagerAdapter(this, itemType)
+        pager_items.isUserInputEnabled = false
         TabLayoutMediator(tabs_items, pager_items) { tab, position ->
             tab.text = getTabTitle(position)
         }.attach()
