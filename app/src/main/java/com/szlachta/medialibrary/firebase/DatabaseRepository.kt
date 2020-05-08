@@ -8,10 +8,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.szlachta.medialibrary.model.BasicResponse
-import com.szlachta.medialibrary.model.Item
-import com.szlachta.medialibrary.model.ItemTypeEnum
-import com.szlachta.medialibrary.model.ListResponse
+import com.szlachta.medialibrary.model.*
+import java.util.Locale
 import java.util.stream.Collectors
 
 class DatabaseRepository private constructor() {
@@ -37,32 +35,38 @@ class DatabaseRepository private constructor() {
             .child(auth.currentUser!!.uid)
     }
 
-    fun getItemsList(itemType: ItemTypeEnum): MutableLiveData<ListResponse> {
+    fun getItemsList(
+        itemType: ItemTypeEnum,
+        itemStatus: ItemStatusEnum
+    ): MutableLiveData<ListResponse> {
         val items = MutableLiveData<ListResponse>()
 
-        database.child(itemType.key).addValueEventListener(object :
-            ValueEventListener {
-            override fun onDataChange(p0: DataSnapshot) {
-                @Suppress("UNCHECKED_CAST") val data: Map<String, Map<String, Any>> =
-                    p0.value as Map<String, Map<String, Any>>? ?: emptyMap()
+        database.child(itemType.key)
+            .orderByChild("status")
+            .equalTo(itemStatus.key.toUpperCase(Locale.getDefault()))
+            .addValueEventListener(object :
+                ValueEventListener {
+                override fun onDataChange(p0: DataSnapshot) {
+                    @Suppress("UNCHECKED_CAST") val data: Map<String, Map<String, Any>> =
+                        p0.value as Map<String, Map<String, Any>>? ?: emptyMap()
 
-                val list = data.entries.stream().map {
-                    Item(
-                        title = it.value["title"] as String,
-                        firebaseId = it.key,
-                        remoteId = it.value["remoteId"] as String?,
-                        year = it.value["year"]?.toString()?.toInt(),
-                        imageUrl = it.value["imageUrl"] as String?
-                    )
-                }.collect(Collectors.toList())
+                    val list = data.entries.stream().map {
+                        Item(
+                            title = it.value["title"] as String,
+                            firebaseId = it.key,
+                            remoteId = it.value["remoteId"] as String?,
+                            year = it.value["year"]?.toString()?.toInt(),
+                            imageUrl = it.value["imageUrl"] as String?
+                        )
+                    }.collect(Collectors.toList())
 
-                items.value = ListResponse(items = list)
-            }
+                    items.value = ListResponse(items = list)
+                }
 
-            override fun onCancelled(p0: DatabaseError) {
-                items.value = ListResponse(errorMessage = p0.message)
-            }
-        })
+                override fun onCancelled(p0: DatabaseError) {
+                    items.value = ListResponse(errorMessage = p0.message)
+                }
+            })
 
         return items
     }

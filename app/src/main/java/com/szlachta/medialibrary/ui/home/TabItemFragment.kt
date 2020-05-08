@@ -57,7 +57,7 @@ class TabItemFragment : Fragment(), OnItemClickListener, ImageLoader {
             ?.apply {
                 itemStatus = getSerializable(ItemStatusEnum.ARG) as ItemStatusEnum
             }
-        viewModel.getItemsList(itemType).observe(viewLifecycleOwner, dataObserver)
+        viewModel.getItemsList(itemType, itemStatus).observe(viewLifecycleOwner, dataObserver)
     }
 
     override fun onItemClicked(item: Item) {
