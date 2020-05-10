@@ -9,7 +9,6 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.szlachta.medialibrary.model.*
-import java.util.Locale
 import java.util.stream.Collectors
 
 class DatabaseRepository private constructor() {
@@ -41,9 +40,9 @@ class DatabaseRepository private constructor() {
     ): MutableLiveData<ListResponse> {
         val items = MutableLiveData<ListResponse>()
 
-        database.child(itemType.key)
+        database.child(itemType.name)
             .orderByChild("status")
-            .equalTo(itemStatus.key.toUpperCase(Locale.getDefault()))
+            .equalTo(itemStatus.name)
             .addValueEventListener(object :
                 ValueEventListener {
                 override fun onDataChange(p0: DataSnapshot) {
@@ -72,9 +71,9 @@ class DatabaseRepository private constructor() {
     }
 
     fun saveItem(item: Item, itemType: ItemTypeEnum): MutableLiveData<BasicResponse> {
-        val key = item.firebaseId ?: database.child(itemType.key).push().key!!
+        val key = item.firebaseId ?: database.child(itemType.name).push().key!!
         val result = MutableLiveData<BasicResponse>()
-        database.child(itemType.key).child(key).setValue(item)
+        database.child(itemType.name).child(key).setValue(item)
             .addOnCompleteListener {
                 result.value = BasicResponse(success = true)
             }

@@ -1,9 +1,9 @@
 package com.szlachta.medialibrary.model
 
-enum class ItemStatusEnum(val position: Int, val key: String) {
-    PLANNED(0, "planned"),
-    IN_PROGRESS(1, "in_progress"),
-    FINISHED(2, "finished"),
+enum class ItemStatusEnum(val position: Int) {
+    PLANNED(0),
+    IN_PROGRESS(1),
+    FINISHED(2),
     ;
 
     companion object {

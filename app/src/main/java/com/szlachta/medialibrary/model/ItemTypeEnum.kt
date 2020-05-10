@@ -1,9 +1,9 @@
 package com.szlachta.medialibrary.model
 
-enum class ItemTypeEnum(val position: Int, val key: String) {
-    GAMES(0, "games"),
-    MOVIES(1, "movies"),
-    BOOKS(2, "books"),
+enum class ItemTypeEnum(val position: Int) {
+    GAMES(0),
+    MOVIES(1),
+    BOOKS(2),
     ;
 
     companion object {
