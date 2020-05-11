@@ -71,11 +71,21 @@ class DatabaseRepository private constructor() {
     }
 
     fun saveItem(item: Item): LiveData<BasicResponse> {
-        return if (item.firebaseId == null) {
-            addItem(item)
-        } else {
-            updateItem(item)
-        }
+        val key: String = item.firebaseId ?: database.child(item.type!!.name).push().key!!
+        item.firebaseId = null
+        val itemType: ItemTypeEnum = item.type!!
+        item.type = null
+        val result = MutableLiveData<BasicResponse>()
+        database.child(itemType.name)
+            .child(key)
+            .setValue(item)
+            .addOnCompleteListener {
+                result.value = BasicResponse(success = true)
+            }
+            .addOnCanceledListener {
+                result.value = BasicResponse(success = false)
+            }
+        return result
     }
 
     fun updateStatus(item: Item, newStatus: ItemStatusEnum): LiveData<BasicResponse> {
@@ -102,46 +112,6 @@ class DatabaseRepository private constructor() {
         database.child(item.type!!.name)
             .child(item.firebaseId!!)
             .removeValue()
-            .addOnCompleteListener {
-                result.value = BasicResponse(success = true)
-            }
-            .addOnCanceledListener {
-                result.value = BasicResponse(success = false)
-            }
-        return result
-    }
-
-    private fun addItem(item: Item): LiveData<BasicResponse> {
-        val key: String = item.firebaseId ?: database.child(item.type!!.name).push().key!!
-        item.firebaseId = null
-        val itemType: ItemTypeEnum = item.type!!
-        item.type = null
-        val result = MutableLiveData<BasicResponse>()
-        database.child(itemType.name)
-            .child(key)
-            .setValue(item)
-            .addOnCompleteListener {
-                result.value = BasicResponse(success = true)
-            }
-            .addOnCanceledListener {
-                result.value = BasicResponse(success = false)
-            }
-        return result
-    }
-
-    private fun updateItem(item: Item): LiveData<BasicResponse> {
-        if (item.firebaseId == null) {
-            val response = BasicResponse(false, "Unable to find item in the database")
-            return MutableLiveData(response)
-        }
-        val key: String = item.firebaseId.toString()
-        item.firebaseId = null
-        val itemType: ItemTypeEnum = item.type!!
-        item.type = null
-        val result = MutableLiveData<BasicResponse>()
-        database.child(itemType.name)
-            .child(key)
-            .setValue(item)
             .addOnCompleteListener {
                 result.value = BasicResponse(success = true)
             }
