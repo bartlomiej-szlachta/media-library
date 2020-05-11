@@ -97,6 +97,20 @@ class DatabaseRepository private constructor() {
         return result
     }
 
+    fun removeItem(item: Item): MutableLiveData<BasicResponse> {
+        val result = MutableLiveData<BasicResponse>()
+        database.child(item.type!!.name)
+            .child(item.firebaseId!!)
+            .removeValue()
+            .addOnCompleteListener {
+                result.value = BasicResponse(success = true)
+            }
+            .addOnCanceledListener {
+                result.value = BasicResponse(success = false)
+            }
+        return result
+    }
+
     private fun addItem(item: Item): LiveData<BasicResponse> {
         val key: String = item.firebaseId ?: database.child(item.type!!.name).push().key!!
         item.firebaseId = null

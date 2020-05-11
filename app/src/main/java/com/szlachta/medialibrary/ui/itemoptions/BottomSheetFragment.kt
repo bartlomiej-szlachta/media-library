@@ -73,7 +73,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                         if (it.success) {
                             Toast.makeText(activity!!, "Marked as planned", Toast.LENGTH_SHORT)
                                 .show()
-                                dismiss()
+                            dismiss()
                         } else {
                             Toast.makeText(activity!!, "Error", Toast.LENGTH_SHORT).show()
                         }
@@ -150,7 +150,14 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private fun initializeRemoveItemOption() {
         if (item.status != null) {
             item_option_remove.setOnClickListener {
-                Toast.makeText(activity, "Remove clicked", Toast.LENGTH_SHORT).show()
+                viewModel.removeItem(item).observe(activity!!, Observer {
+                    if (it.success) {
+                        Toast.makeText(activity!!, "Item removed", Toast.LENGTH_SHORT).show()
+                        dismiss()
+                    } else {
+                        Toast.makeText(activity!!, "Error", Toast.LENGTH_SHORT).show()
+                    }
+                })
             }
         } else {
             item_option_remove.visibility = View.GONE

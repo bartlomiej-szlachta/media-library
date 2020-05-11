@@ -19,4 +19,8 @@ class DatabaseViewModel : ViewModel() {
     fun updateStatus(item: Item, newStatus: ItemStatusEnum): LiveData<BasicResponse> {
         return repository.updateStatus(item, newStatus)
     }
+
+    fun removeItem(item: Item): LiveData<BasicResponse> {
+        return repository.removeItem(item)
+    }
 }
