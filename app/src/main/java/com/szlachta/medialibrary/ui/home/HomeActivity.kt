@@ -33,14 +33,14 @@ class HomeActivity : AppCompatActivity() {
 
     private val actionBarOnClickListener = View.OnClickListener {
         val intent: Intent = Intent(this, SearchActivity::class.java)
-            .putExtra(ItemTypeEnum.ARG, getCurrentItem())
+            .putExtra(ItemTypeEnum.TAG, getCurrentItem())
         startActivity(intent)
     }
 
     private val floatingActionButtonOnClickListener = View.OnClickListener {
         val intent = Intent(this, FormActivity::class.java)
-            .putExtra(FormModeEnum.ARG, FormModeEnum.CREATE)
-            .putExtra(ItemTypeEnum.ARG, getCurrentItem())
+            .putExtra(FormModeEnum.TAG, FormModeEnum.CREATE)
+            .putExtra(ItemTypeEnum.TAG, getCurrentItem())
         startActivity(intent)
     }
 

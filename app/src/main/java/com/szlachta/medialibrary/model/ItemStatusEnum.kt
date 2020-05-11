@@ -7,7 +7,7 @@ enum class ItemStatusEnum(val position: Int) {
     ;
 
     companion object {
-        const val ARG = "item-status"
+        const val TAG = "item-status"
 
         fun getByPosition(position: Int): ItemStatusEnum {
             return values()[position]

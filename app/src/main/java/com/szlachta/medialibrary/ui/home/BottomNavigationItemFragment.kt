@@ -35,9 +35,9 @@ class BottomNavigationItemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments
-            ?.takeIf { it.containsKey(ItemTypeEnum.ARG) }
+            ?.takeIf { it.containsKey(ItemTypeEnum.TAG) }
             ?.apply {
-                itemType = getSerializable(ItemTypeEnum.ARG) as ItemTypeEnum
+                itemType = getSerializable(ItemTypeEnum.TAG) as ItemTypeEnum
             }
         pager_tabs.adapter = TabsPagerAdapter(this, itemType)
         pager_tabs.isUserInputEnabled = false

@@ -12,7 +12,7 @@ class BottomNavigationPagerAdapter(activity: AppCompatActivity) : FragmentStateA
     override fun createFragment(position: Int): Fragment {
         val fragment = BottomNavigationItemFragment()
         fragment.arguments = Bundle().apply {
-            putSerializable(ItemTypeEnum.ARG, ItemTypeEnum.getByPosition(position))
+            putSerializable(ItemTypeEnum.TAG, ItemTypeEnum.getByPosition(position))
         }
         return fragment
     }

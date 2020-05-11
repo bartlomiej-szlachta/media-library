@@ -71,8 +71,8 @@ class FormActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         setContentView(R.layout.activity_form)
 
-        mode = intent.getSerializableExtra(FormModeEnum.ARG) as FormModeEnum
-        itemType = intent.getSerializableExtra(ItemTypeEnum.ARG) as ItemTypeEnum
+        mode = intent.getSerializableExtra(FormModeEnum.TAG) as FormModeEnum
+        itemType = intent.getSerializableExtra(ItemTypeEnum.TAG) as ItemTypeEnum
 
         setSupportActionBar(action_bar_form)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

@@ -16,8 +16,8 @@ class TabsPagerAdapter(
     override fun createFragment(position: Int): Fragment {
         val fragment = TabItemFragment()
         fragment.arguments = Bundle().apply {
-            putSerializable(ItemTypeEnum.ARG, itemType)
-            putSerializable(ItemStatusEnum.ARG, ItemStatusEnum.getByPosition(position))
+            putSerializable(ItemTypeEnum.TAG, itemType)
+            putSerializable(ItemStatusEnum.TAG, ItemStatusEnum.getByPosition(position))
         }
         return fragment
     }

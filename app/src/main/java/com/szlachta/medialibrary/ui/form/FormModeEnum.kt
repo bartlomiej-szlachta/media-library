@@ -6,6 +6,6 @@ enum class FormModeEnum {
     ;
 
     companion object {
-        const val ARG = "form-mode"
+        const val TAG = "form-mode"
     }
 }

@@ -46,7 +46,7 @@ class SearchActivity : AppCompatActivity(), ImageLoader, OnItemClickListener {
         setSupportActionBar(action_bar_search)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        itemType = intent.getSerializableExtra(ItemTypeEnum.ARG) as ItemTypeEnum
+        itemType = intent.getSerializableExtra(ItemTypeEnum.TAG) as ItemTypeEnum
 
         setHint(itemType)
 

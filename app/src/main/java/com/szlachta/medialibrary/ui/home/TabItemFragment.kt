@@ -50,13 +50,13 @@ class TabItemFragment : Fragment(), OnItemClickListener, ImageLoader {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments
-            ?.takeIf { it.containsKey(ItemTypeEnum.ARG) }
+            ?.takeIf { it.containsKey(ItemTypeEnum.TAG) }
             ?.apply {
-                itemType = getSerializable(ItemTypeEnum.ARG) as ItemTypeEnum
+                itemType = getSerializable(ItemTypeEnum.TAG) as ItemTypeEnum
             }
-            ?.takeIf { it.containsKey(ItemStatusEnum.ARG) }
+            ?.takeIf { it.containsKey(ItemStatusEnum.TAG) }
             ?.apply {
-                itemStatus = getSerializable(ItemStatusEnum.ARG) as ItemStatusEnum
+                itemStatus = getSerializable(ItemStatusEnum.TAG) as ItemStatusEnum
             }
         viewModel.getItemsList(itemType, itemStatus).observe(viewLifecycleOwner, dataObserver)
     }
