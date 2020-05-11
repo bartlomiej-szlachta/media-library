@@ -192,7 +192,7 @@ class FormActivity : AppCompatActivity() {
                 title = title,
                 type = itemType,
                 firebaseId = item?.firebaseId,
-                remoteId = item?.remoteId,
+                remoteId = null,
                 year = year,
                 imageUrl = item?.imageUrl,
                 status = status
