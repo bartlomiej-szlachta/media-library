@@ -1,0 +1,139 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/current_item_image_card_view"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="4dp">
+
+            <ImageView
+                android:id="@+id/current_item_image"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/item_image_description" />
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/current_item_title_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/current_item_year_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/item_option_set_planned"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:drawableStart="@drawable/ic_schedule"
+        android:drawablePadding="16dp"
+        android:drawableTint="@android:color/white"
+        android:focusable="true"
+        android:padding="16dp"
+        android:text="@string/set_planned"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/item_option_set_in_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:drawableStart="@drawable/ic_more_horiz"
+        android:drawablePadding="16dp"
+        android:drawableTint="@android:color/white"
+        android:focusable="true"
+        android:gravity="start|center_vertical"
+        android:padding="16dp"
+        android:text="@string/set_in_progress"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/item_option_set_finished"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:drawableStart="@drawable/ic_done"
+        android:drawablePadding="16dp"
+        android:drawableTint="@android:color/white"
+        android:focusable="true"
+        android:gravity="start|center_vertical"
+        android:padding="16dp"
+        android:text="@string/set_finished"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/item_option_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="16dp"
+        android:drawableTint="@android:color/white"
+        android:focusable="true"
+        android:padding="16dp"
+        android:text="@string/search_item"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/item_option_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:drawableStart="@drawable/ic_edit"
+        android:drawablePadding="16dp"
+        android:drawableTint="@android:color/white"
+        android:focusable="true"
+        android:gravity="start|center_vertical"
+        android:padding="16dp"
+        android:text="@string/edit_item"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/item_option_remove"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:drawableStart="@drawable/ic_clear"
+        android:drawablePadding="16dp"
+        android:drawableTint="@android:color/white"
+        android:focusable="true"
+        android:gravity="start|center_vertical"
+        android:padding="16dp"
+        android:text="@string/remove_item"
+        android:textSize="16sp" />
+
+</LinearLayout>

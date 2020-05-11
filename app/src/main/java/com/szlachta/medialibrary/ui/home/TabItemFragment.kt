@@ -18,6 +18,7 @@ import com.szlachta.medialibrary.model.ItemTypeEnum
 import com.szlachta.medialibrary.model.ListResponse
 import com.szlachta.medialibrary.model.ItemStatusEnum
 import com.szlachta.medialibrary.ui.list.ImageLoader
+import com.szlachta.medialibrary.ui.itemoptions.BottomSheetFragment
 import com.szlachta.medialibrary.ui.list.ListAdapter
 import com.szlachta.medialibrary.ui.list.OnItemClickListener
 import com.szlachta.medialibrary.viewmodel.DatabaseViewModel
@@ -61,7 +62,11 @@ class TabItemFragment : Fragment(), OnItemClickListener, ImageLoader {
     }
 
     override fun onItemClicked(item: Item) {
-        Toast.makeText(activity, item.title, Toast.LENGTH_SHORT).show()
+        val bottomSheetFragment = BottomSheetFragment()
+        bottomSheetFragment.arguments = Bundle().apply {
+            putSerializable(BottomSheetFragment.TAG_ITEM, item)
+        }
+        bottomSheetFragment.show(activity!!.supportFragmentManager, BottomSheetFragment.TAG_SHEET)
     }
 
     override fun loadImage(url: String?, into: ImageView) {

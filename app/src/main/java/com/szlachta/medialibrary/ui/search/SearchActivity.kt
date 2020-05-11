@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.szlachta.medialibrary.R
 import com.szlachta.medialibrary.model.Item
 import com.szlachta.medialibrary.model.ItemTypeEnum
+import com.szlachta.medialibrary.ui.itemoptions.BottomSheetFragment
 import com.szlachta.medialibrary.ui.list.ImageLoader
 import com.szlachta.medialibrary.ui.list.ListAdapter
 import com.szlachta.medialibrary.ui.list.OnItemClickListener
@@ -100,8 +101,12 @@ class SearchActivity : AppCompatActivity(), ImageLoader, OnItemClickListener {
     }
 
     override fun onItemClicked(item: Item) {
-        // TODO: on item clicked
-        Toast.makeText(this, item.title, Toast.LENGTH_SHORT).show()
+        onFinishTyping()
+        val bottomSheetFragment = BottomSheetFragment()
+        bottomSheetFragment.arguments = Bundle().apply {
+            putSerializable(BottomSheetFragment.TAG_ITEM, item)
+        }
+        bottomSheetFragment.show(this.supportFragmentManager, BottomSheetFragment.TAG_SHEET)
     }
 
     private fun setHint(itemType: ItemTypeEnum) {

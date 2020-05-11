@@ -55,7 +55,8 @@ class DatabaseRepository private constructor() {
                             firebaseId = it.key,
                             remoteId = it.value["remoteId"] as String?,
                             year = it.value["year"]?.toString()?.toInt(),
-                            imageUrl = it.value["imageUrl"] as String?
+                            imageUrl = it.value["imageUrl"] as String?,
+                            status = ItemStatusEnum.valueOf(it.value["status"].toString())
                         )
                     }.collect(Collectors.toList())
 

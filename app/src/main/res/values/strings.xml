@@ -28,4 +28,10 @@
     <string name="status_planned">Planned</string>
     <string name="status_in_progress">Started</string>
     <string name="status_finished">Finished</string>
+    <string name="set_planned">Set as planned</string>
+    <string name="set_in_progress">Set as started</string>
+    <string name="set_finished">Set as finished</string>
+    <string name="edit_item">Edit</string>
+    <string name="remove_item">Remove from my library</string>
+    <string name="search_item">Find in web</string>
 </resources>
