@@ -21,6 +21,9 @@ import kotlinx.android.synthetic.main.activity_form.*
 import java.util.Calendar
 
 class FormActivity : AppCompatActivity() {
+    companion object {
+        const val TAG_ITEM = "tag-item-to-bottom-sheet"
+    }
 
     private val viewModel: DatabaseViewModel by lazy {
         ViewModelProvider(this).get(DatabaseViewModel::class.java)
@@ -29,6 +32,7 @@ class FormActivity : AppCompatActivity() {
     private lateinit var mode: FormModeEnum
     private lateinit var itemType: ItemTypeEnum
 
+    private var item: Item? = null
     private var isTitleTouched: Boolean = false
     private var isYearTouched: Boolean = false
 
@@ -74,6 +78,11 @@ class FormActivity : AppCompatActivity() {
         mode = intent.getSerializableExtra(FormModeEnum.TAG) as FormModeEnum
         itemType = intent.getSerializableExtra(ItemTypeEnum.TAG) as ItemTypeEnum
 
+        if (mode == FormModeEnum.EDIT) {
+            item = intent.getSerializableExtra(TAG_ITEM) as Item
+            initializeFieldsEditMode()
+        }
+
         setSupportActionBar(action_bar_form)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_clear)
@@ -97,17 +106,7 @@ class FormActivity : AppCompatActivity() {
                 val isYearCorrect = checkIfYearCorrect(input_year.text.toString())
 
                 if (isTitleCorrect && isYearCorrect) {
-                    val year = if (input_year.text.isNullOrEmpty()) {
-                        null
-                    } else {
-                        input_year.text.toString().toInt()
-                    }
-                    val newItem = Item(
-                        title = input_title.text.toString(),
-                        year = year,
-                        status = getChosenStatus()
-                    )
-                    saveData(newItem)
+                    onSaveData()
                 }
 
                 true
@@ -132,6 +131,18 @@ class FormActivity : AppCompatActivity() {
             ItemTypeEnum.BOOKS -> getString(R.string.title_form_book)
         }
         return "$actionName $itemTypeName"
+    }
+
+    private fun initializeFieldsEditMode() {
+        when (item?.status) {
+            ItemStatusEnum.PLANNED -> input_chip_planned.isChecked = true
+            ItemStatusEnum.IN_PROGRESS -> input_chip_in_progress.isChecked = true
+            ItemStatusEnum.FINISHED -> input_chip_finished.isChecked = true
+        }
+        input_title.setText(item?.title)
+        if (item?.year != null) {
+            input_year.setText(item?.year.toString())
+        }
     }
 
     private fun checkIfTitleCorrect(title: String): Boolean {
@@ -162,10 +173,33 @@ class FormActivity : AppCompatActivity() {
         return true
     }
 
-    private fun saveData(item: Item) {
-        viewModel.saveItem(item, itemType).observe(this, Observer {
+    private fun onSaveData() {
+        val title = input_title.text.toString()
+        val year = if (input_year.text.isNullOrEmpty()) {
+            null
+        } else {
+            input_year.text.toString().toInt()
+        }
+        val status = getChosenStatus()
+        val newItem = when (mode) {
+            FormModeEnum.CREATE -> Item(
+                title = title,
+                year = year,
+                status = status
+            )
+            FormModeEnum.EDIT -> Item(
+                title = title,
+                firebaseId = item?.firebaseId,
+                remoteId = item?.remoteId,
+                year = year,
+                imageUrl = item?.imageUrl,
+                status = status
+            )
+        }
+
+        viewModel.saveItem(newItem, itemType).observe(this, Observer {
             if (it.success) {
-                Toast.makeText(this, "Item created", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Item saved", Toast.LENGTH_SHORT).show()
                 finish()
             } else {
                 Toast.makeText(this, "Operation rejected", Toast.LENGTH_SHORT).show()
@@ -174,7 +208,7 @@ class FormActivity : AppCompatActivity() {
     }
 
     private fun getChosenStatus(): ItemStatusEnum? {
-        return when(input_status_chips.checkedChipId) {
+        return when (input_status_chips.checkedChipId) {
             R.id.input_chip_planned -> ItemStatusEnum.PLANNED
             R.id.input_chip_in_progress -> ItemStatusEnum.IN_PROGRESS
             R.id.input_chip_finished -> ItemStatusEnum.FINISHED

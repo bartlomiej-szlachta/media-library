@@ -1,5 +1,6 @@
 package com.szlachta.medialibrary.ui.itemoptions
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,8 @@ import com.szlachta.medialibrary.R
 import com.szlachta.medialibrary.model.Item
 import com.szlachta.medialibrary.model.ItemStatusEnum
 import com.szlachta.medialibrary.model.ItemTypeEnum
+import com.szlachta.medialibrary.ui.form.FormActivity
+import com.szlachta.medialibrary.ui.form.FormModeEnum
 import com.szlachta.medialibrary.viewmodel.DatabaseViewModel
 import kotlinx.android.synthetic.main.fragment_bottom_sheet.*
 
@@ -137,7 +140,12 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private fun initializeEditItemOption() {
         if (item.status != null) {
             item_option_edit.setOnClickListener {
-                Toast.makeText(activity, "Edit clicked", Toast.LENGTH_SHORT).show()
+                val intent = Intent(activity!!, FormActivity::class.java)
+                    .putExtra(FormModeEnum.TAG, FormModeEnum.EDIT)
+                    .putExtra(ItemTypeEnum.TAG, itemType)
+                    .putExtra(TAG_ITEM, item)
+                startActivity(intent)
+                dismiss()
             }
         } else {
             item_option_edit.visibility = View.GONE
