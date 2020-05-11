@@ -184,11 +184,13 @@ class FormActivity : AppCompatActivity() {
         val newItem = when (mode) {
             FormModeEnum.CREATE -> Item(
                 title = title,
+                type = itemType,
                 year = year,
                 status = status
             )
             FormModeEnum.EDIT -> Item(
                 title = title,
+                type = itemType,
                 firebaseId = item?.firebaseId,
                 remoteId = item?.remoteId,
                 year = year,
@@ -197,7 +199,7 @@ class FormActivity : AppCompatActivity() {
             )
         }
 
-        viewModel.saveItem(newItem, itemType).observe(this, Observer {
+        viewModel.saveItem(newItem).observe(this, Observer {
             if (it.success) {
                 Toast.makeText(this, "Item saved", Toast.LENGTH_SHORT).show()
                 finish()

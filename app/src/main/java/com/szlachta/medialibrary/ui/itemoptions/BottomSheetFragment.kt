@@ -30,7 +30,6 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private lateinit var item: Item
-    private lateinit var itemType: ItemTypeEnum
 
     // TODO: bug: app uses light mode instead of dark mode
     //  when going back from the background
@@ -46,10 +45,6 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments
-            ?.takeIf { it.containsKey(ItemTypeEnum.TAG) }
-            ?.apply {
-                itemType = getSerializable(ItemTypeEnum.TAG) as ItemTypeEnum
-            }
             ?.takeIf { it.containsKey(TAG_ITEM) }
             ?.apply {
                 item = getSerializable(TAG_ITEM) as Item
@@ -73,7 +68,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private fun initializeSetPlannedOption() {
         if (item.status != ItemStatusEnum.PLANNED) {
             item_option_set_planned.setOnClickListener {
-                viewModel.updateStatus(item, itemType, ItemStatusEnum.PLANNED)
+                viewModel.updateStatus(item, ItemStatusEnum.PLANNED)
                     .observe(activity!!, Observer {
                         if (it.success) {
                             Toast.makeText(activity!!, "Marked as planned", Toast.LENGTH_SHORT)
@@ -92,7 +87,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private fun initializeSetInProgressOption() {
         if (item.status != ItemStatusEnum.IN_PROGRESS) {
             item_option_set_in_progress.setOnClickListener {
-                viewModel.updateStatus(item, itemType, ItemStatusEnum.IN_PROGRESS)
+                viewModel.updateStatus(item, ItemStatusEnum.IN_PROGRESS)
                     .observe(activity!!, Observer {
                         if (it.success) {
                             Toast.makeText(activity!!, "Marked as started", Toast.LENGTH_SHORT)
@@ -111,7 +106,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private fun initializeSetFinishedOption() {
         if (item.status != ItemStatusEnum.FINISHED) {
             item_option_set_finished.setOnClickListener {
-                viewModel.updateStatus(item, itemType, ItemStatusEnum.FINISHED)
+                viewModel.updateStatus(item, ItemStatusEnum.FINISHED)
                     .observe(activity!!, Observer {
                         if (it.success) {
                             Toast.makeText(activity!!, "Marked as finished", Toast.LENGTH_SHORT)
@@ -142,7 +137,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             item_option_edit.setOnClickListener {
                 val intent = Intent(activity!!, FormActivity::class.java)
                     .putExtra(FormModeEnum.TAG, FormModeEnum.EDIT)
-                    .putExtra(ItemTypeEnum.TAG, itemType)
+                    .putExtra(ItemTypeEnum.TAG, item.type)
                     .putExtra(TAG_ITEM, item)
                 startActivity(intent)
                 dismiss()

@@ -35,10 +35,7 @@ class DatabaseRepository private constructor() {
             .child(auth.currentUser!!.uid)
     }
 
-    fun getItemsList(
-        itemType: ItemTypeEnum,
-        itemStatus: ItemStatusEnum
-    ): MutableLiveData<ListResponse> {
+    fun getItemsList(itemType: ItemTypeEnum, itemStatus: ItemStatusEnum): LiveData<ListResponse> {
         val items = MutableLiveData<ListResponse>()
 
         database.child(itemType.name)
@@ -53,11 +50,12 @@ class DatabaseRepository private constructor() {
                     val list = data.entries.stream().map {
                         Item(
                             title = it.value["title"] as String,
+                            type = itemType,
                             firebaseId = it.key,
                             remoteId = it.value["remoteId"] as String?,
                             year = it.value["year"]?.toString()?.toInt(),
                             imageUrl = it.value["imageUrl"] as String?,
-                            status = ItemStatusEnum.valueOf(it.value["status"].toString())
+                            status = itemStatus
                         )
                     }.collect(Collectors.toList())
 
@@ -72,25 +70,21 @@ class DatabaseRepository private constructor() {
         return items
     }
 
-    fun saveItem(item: Item, itemType: ItemTypeEnum): LiveData<BasicResponse> {
+    fun saveItem(item: Item): LiveData<BasicResponse> {
         return if (item.firebaseId == null) {
-            addItem(item, itemType)
+            addItem(item)
         } else {
-            updateItem(item, itemType)
+            updateItem(item)
         }
     }
 
-    fun updateStatus(
-        item: Item,
-        itemType: ItemTypeEnum,
-        newStatus: ItemStatusEnum
-    ): MutableLiveData<BasicResponse> {
+    fun updateStatus(item: Item, newStatus: ItemStatusEnum): LiveData<BasicResponse> {
         if (item.firebaseId == null) {
             val response = BasicResponse(false, "Unable to find item in the database")
             return MutableLiveData(response)
         }
         val result = MutableLiveData<BasicResponse>()
-        database.child(itemType.name)
+        database.child(item.type!!.name)
             .child(item.firebaseId.toString())
             .child("status")
             .setValue(newStatus)
@@ -103,10 +97,15 @@ class DatabaseRepository private constructor() {
         return result
     }
 
-    private fun addItem(item: Item, itemType: ItemTypeEnum): LiveData<BasicResponse> {
-        val key = item.firebaseId ?: database.child(itemType.name).push().key!!
+    private fun addItem(item: Item): LiveData<BasicResponse> {
+        val key: String = item.firebaseId ?: database.child(item.type!!.name).push().key!!
+        item.firebaseId = null
+        val itemType: ItemTypeEnum = item.type!!
+        item.type = null
         val result = MutableLiveData<BasicResponse>()
-        database.child(itemType.name).child(key).setValue(item)
+        database.child(itemType.name)
+            .child(key)
+            .setValue(item)
             .addOnCompleteListener {
                 result.value = BasicResponse(success = true)
             }
@@ -116,14 +115,18 @@ class DatabaseRepository private constructor() {
         return result
     }
 
-    private fun updateItem(item: Item, itemType: ItemTypeEnum): LiveData<BasicResponse> {
+    private fun updateItem(item: Item): LiveData<BasicResponse> {
         if (item.firebaseId == null) {
             val response = BasicResponse(false, "Unable to find item in the database")
             return MutableLiveData(response)
         }
+        val key: String = item.firebaseId.toString()
+        item.firebaseId = null
+        val itemType: ItemTypeEnum = item.type!!
+        item.type = null
         val result = MutableLiveData<BasicResponse>()
         database.child(itemType.name)
-            .child(item.firebaseId.toString())
+            .child(key)
             .setValue(item)
             .addOnCompleteListener {
                 result.value = BasicResponse(success = true)

@@ -11,6 +11,7 @@ data class MovieResponse(
     @SerializedName("Poster") override val imageUrl: String
 ) : Item(
     title = title,
+    type = ItemTypeEnum.MOVIES,
     remoteId = remoteId,
     year = year,
     imageUrl = imageUrl
