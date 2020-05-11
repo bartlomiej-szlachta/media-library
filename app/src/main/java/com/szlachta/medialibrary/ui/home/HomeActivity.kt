@@ -33,14 +33,14 @@ class HomeActivity : AppCompatActivity() {
 
     private val actionBarOnClickListener = View.OnClickListener {
         val intent: Intent = Intent(this, SearchActivity::class.java)
-            .putExtra(ItemTypeEnum.TAG, getCurrentItem())
+            .putExtra(ItemTypeEnum.TAG, getItemType())
         startActivity(intent)
     }
 
     private val floatingActionButtonOnClickListener = View.OnClickListener {
         val intent = Intent(this, FormActivity::class.java)
             .putExtra(FormModeEnum.TAG, FormModeEnum.CREATE)
-            .putExtra(ItemTypeEnum.TAG, getCurrentItem())
+            .putExtra(ItemTypeEnum.TAG, getItemType())
         startActivity(intent)
     }
 
@@ -116,5 +116,5 @@ class HomeActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun getCurrentItem(): ItemTypeEnum = ItemTypeEnum.getByPosition(pager_home.currentItem)
+    private fun getItemType(): ItemTypeEnum = ItemTypeEnum.getByPosition(pager_home.currentItem)
 }
