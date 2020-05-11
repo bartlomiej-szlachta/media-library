@@ -14,8 +14,6 @@ import kotlinx.android.synthetic.main.fragment_bottom_navigation_item.tabs_navig
 class BottomNavigationItemFragment : Fragment() {
     private lateinit var itemType: ItemTypeEnum
 
-    // TODO: restore chosen tab on application go back from background
-
     private val onTabSelectedListener = object : TabLayout.OnTabSelectedListener {
         override fun onTabReselected(tab: TabLayout.Tab?) {}
 
