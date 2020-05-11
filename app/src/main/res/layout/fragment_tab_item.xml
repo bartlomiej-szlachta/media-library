@@ -7,5 +7,7 @@
         android:id="@+id/rv_items_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never" />
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingTop="8dp" />
 </FrameLayout>
