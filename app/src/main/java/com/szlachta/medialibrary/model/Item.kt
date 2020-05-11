@@ -9,5 +9,5 @@ open class Item(
     open val remoteId: String? = null,
     open val year: Int? = null,
     open val imageUrl: String? = null,
-    open val status: ItemStatusEnum? = null
+    open var status: ItemStatusEnum? = null
 ) : Serializable

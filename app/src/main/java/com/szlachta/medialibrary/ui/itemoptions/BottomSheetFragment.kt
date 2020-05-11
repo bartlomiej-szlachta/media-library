@@ -68,16 +68,15 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private fun initializeSetPlannedOption() {
         if (item.status != ItemStatusEnum.PLANNED) {
             item_option_set_planned.setOnClickListener {
-                viewModel.updateStatus(item, ItemStatusEnum.PLANNED)
-                    .observe(activity!!, Observer {
-                        if (it.success) {
-                            Toast.makeText(activity!!, "Marked as planned", Toast.LENGTH_SHORT)
-                                .show()
-                            dismiss()
-                        } else {
-                            Toast.makeText(activity!!, "Error", Toast.LENGTH_SHORT).show()
-                        }
-                    })
+                item.status = ItemStatusEnum.PLANNED
+                viewModel.saveItem(item).observe(activity!!, Observer {
+                    if (it.success) {
+                        Toast.makeText(activity!!, "Marked as planned", Toast.LENGTH_SHORT).show()
+                        dismiss()
+                    } else {
+                        Toast.makeText(activity!!, "Error", Toast.LENGTH_SHORT).show()
+                    }
+                })
             }
         } else {
             item_option_set_planned.visibility = View.GONE
@@ -87,16 +86,15 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private fun initializeSetInProgressOption() {
         if (item.status != ItemStatusEnum.IN_PROGRESS) {
             item_option_set_in_progress.setOnClickListener {
-                viewModel.updateStatus(item, ItemStatusEnum.IN_PROGRESS)
-                    .observe(activity!!, Observer {
-                        if (it.success) {
-                            Toast.makeText(activity!!, "Marked as started", Toast.LENGTH_SHORT)
-                                .show()
-                            dismiss()
-                        } else {
-                            Toast.makeText(activity!!, "Error", Toast.LENGTH_SHORT).show()
-                        }
-                    })
+                item.status = ItemStatusEnum.IN_PROGRESS
+                viewModel.saveItem(item).observe(activity!!, Observer {
+                    if (it.success) {
+                        Toast.makeText(activity!!, "Marked as started", Toast.LENGTH_SHORT).show()
+                        dismiss()
+                    } else {
+                        Toast.makeText(activity!!, "Error", Toast.LENGTH_SHORT).show()
+                    }
+                })
             }
         } else {
             item_option_set_in_progress.visibility = View.GONE
@@ -106,16 +104,15 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private fun initializeSetFinishedOption() {
         if (item.status != ItemStatusEnum.FINISHED) {
             item_option_set_finished.setOnClickListener {
-                viewModel.updateStatus(item, ItemStatusEnum.FINISHED)
-                    .observe(activity!!, Observer {
-                        if (it.success) {
-                            Toast.makeText(activity!!, "Marked as finished", Toast.LENGTH_SHORT)
-                                .show()
-                            dismiss()
-                        } else {
-                            Toast.makeText(activity!!, "Error", Toast.LENGTH_SHORT).show()
-                        }
-                    })
+                item.status = ItemStatusEnum.FINISHED
+                viewModel.saveItem(item).observe(activity!!, Observer {
+                    if (it.success) {
+                        Toast.makeText(activity!!, "Marked as finished", Toast.LENGTH_SHORT).show()
+                        dismiss()
+                    } else {
+                        Toast.makeText(activity!!, "Error", Toast.LENGTH_SHORT).show()
+                    }
+                })
             }
         } else {
             item_option_set_finished.visibility = View.GONE

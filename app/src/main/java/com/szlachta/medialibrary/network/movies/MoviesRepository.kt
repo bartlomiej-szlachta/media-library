@@ -1,6 +1,7 @@
 package com.szlachta.medialibrary.network.movies
 
 import androidx.lifecycle.MutableLiveData
+import com.szlachta.medialibrary.model.ItemTypeEnum
 import com.szlachta.medialibrary.model.ListResponse
 import com.szlachta.medialibrary.network.SearchRepository
 import retrofit2.Call
@@ -31,6 +32,11 @@ class MoviesRepository private constructor() : SearchRepository {
             ) {
                 if (response.code() == 200) {
                     moviesList.value = response.body()
+
+                    // TODO: set the type better way
+                    moviesList.value?.items?.forEach {
+                        it.type = ItemTypeEnum.MOVIES
+                    }
                 }
             }
 
