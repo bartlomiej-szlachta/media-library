@@ -64,6 +64,7 @@ class TabItemFragment : Fragment(), OnItemClickListener, ImageLoader {
     override fun onItemClicked(item: Item) {
         val bottomSheetFragment = BottomSheetFragment()
         bottomSheetFragment.arguments = Bundle().apply {
+            putSerializable(ItemTypeEnum.TAG, itemType)
             putSerializable(BottomSheetFragment.TAG_ITEM, item)
         }
         bottomSheetFragment.show(activity!!.supportFragmentManager, BottomSheetFragment.TAG_SHEET)

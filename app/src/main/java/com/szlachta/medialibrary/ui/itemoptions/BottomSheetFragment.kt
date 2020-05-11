@@ -5,11 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.szlachta.medialibrary.R
 import com.szlachta.medialibrary.model.Item
 import com.szlachta.medialibrary.model.ItemStatusEnum
+import com.szlachta.medialibrary.model.ItemTypeEnum
+import com.szlachta.medialibrary.viewmodel.DatabaseViewModel
 import kotlinx.android.synthetic.main.fragment_bottom_sheet.*
 
 class BottomSheetFragment : BottomSheetDialogFragment() {
@@ -18,7 +22,12 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         const val TAG_SHEET = "item-options-bottom-sheet"
     }
 
+    private val viewModel: DatabaseViewModel by lazy {
+        ViewModelProvider(this).get(DatabaseViewModel::class.java)
+    }
+
     private lateinit var item: Item
+    private lateinit var itemType: ItemTypeEnum
 
     // TODO: bug: app uses light mode instead of dark mode
     //  when going back from the background
@@ -34,6 +43,10 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments
+            ?.takeIf { it.containsKey(ItemTypeEnum.TAG) }
+            ?.apply {
+                itemType = getSerializable(ItemTypeEnum.TAG) as ItemTypeEnum
+            }
             ?.takeIf { it.containsKey(TAG_ITEM) }
             ?.apply {
                 item = getSerializable(TAG_ITEM) as Item
@@ -57,7 +70,16 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private fun initializeSetPlannedOption() {
         if (item.status != ItemStatusEnum.PLANNED) {
             item_option_set_planned.setOnClickListener {
-                Toast.makeText(activity, "Set as planned clicked", Toast.LENGTH_SHORT).show()
+                viewModel.updateStatus(item, itemType, ItemStatusEnum.PLANNED)
+                    .observe(activity!!, Observer {
+                        if (it.success) {
+                            Toast.makeText(activity!!, "Marked as planned", Toast.LENGTH_SHORT)
+                                .show()
+                                dismiss()
+                        } else {
+                            Toast.makeText(activity!!, "Error", Toast.LENGTH_SHORT).show()
+                        }
+                    })
             }
         } else {
             item_option_set_planned.visibility = View.GONE
@@ -67,7 +89,16 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private fun initializeSetInProgressOption() {
         if (item.status != ItemStatusEnum.IN_PROGRESS) {
             item_option_set_in_progress.setOnClickListener {
-                Toast.makeText(activity, "Set as started clicked", Toast.LENGTH_SHORT).show()
+                viewModel.updateStatus(item, itemType, ItemStatusEnum.IN_PROGRESS)
+                    .observe(activity!!, Observer {
+                        if (it.success) {
+                            Toast.makeText(activity!!, "Marked as started", Toast.LENGTH_SHORT)
+                                .show()
+                            dismiss()
+                        } else {
+                            Toast.makeText(activity!!, "Error", Toast.LENGTH_SHORT).show()
+                        }
+                    })
             }
         } else {
             item_option_set_in_progress.visibility = View.GONE
@@ -77,7 +108,16 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private fun initializeSetFinishedOption() {
         if (item.status != ItemStatusEnum.FINISHED) {
             item_option_set_finished.setOnClickListener {
-                Toast.makeText(activity, "Set as finished clicked", Toast.LENGTH_SHORT).show()
+                viewModel.updateStatus(item, itemType, ItemStatusEnum.FINISHED)
+                    .observe(activity!!, Observer {
+                        if (it.success) {
+                            Toast.makeText(activity!!, "Marked as finished", Toast.LENGTH_SHORT)
+                                .show()
+                            dismiss()
+                        } else {
+                            Toast.makeText(activity!!, "Error", Toast.LENGTH_SHORT).show()
+                        }
+                    })
             }
         } else {
             item_option_set_finished.visibility = View.GONE

@@ -83,4 +83,27 @@ class DatabaseRepository private constructor() {
             }
         return result
     }
+
+    fun updateStatus(
+        item: Item,
+        itemType: ItemTypeEnum,
+        newStatus: ItemStatusEnum
+    ): MutableLiveData<BasicResponse> {
+        if (item.firebaseId == null) {
+            val response = BasicResponse(false, "Unable to find item in the database")
+            return MutableLiveData(response)
+        }
+        val result = MutableLiveData<BasicResponse>()
+        database.child(itemType.name)
+            .child(item.firebaseId.toString())
+            .child("status")
+            .setValue(newStatus)
+            .addOnCompleteListener {
+                result.value = BasicResponse(success = true)
+            }
+            .addOnCanceledListener {
+                result.value = BasicResponse(success = false)
+            }
+        return result
+    }
 }

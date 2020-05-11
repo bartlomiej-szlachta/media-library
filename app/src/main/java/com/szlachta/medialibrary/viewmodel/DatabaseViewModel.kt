@@ -15,4 +15,12 @@ class DatabaseViewModel : ViewModel() {
     fun saveItem(item: Item, itemType: ItemTypeEnum): LiveData<BasicResponse> {
         return repository.saveItem(item, itemType)
     }
+
+    fun updateStatus(
+        item: Item,
+        itemType: ItemTypeEnum,
+        newStatus: ItemStatusEnum
+    ): LiveData<BasicResponse> {
+        return repository.updateStatus(item, itemType, newStatus)
+    }
 }

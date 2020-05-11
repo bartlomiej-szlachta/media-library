@@ -104,6 +104,7 @@ class SearchActivity : AppCompatActivity(), ImageLoader, OnItemClickListener {
         onFinishTyping()
         val bottomSheetFragment = BottomSheetFragment()
         bottomSheetFragment.arguments = Bundle().apply {
+            putSerializable(ItemTypeEnum.TAG, itemType)
             putSerializable(BottomSheetFragment.TAG_ITEM, item)
         }
         bottomSheetFragment.show(this.supportFragmentManager, BottomSheetFragment.TAG_SHEET)
