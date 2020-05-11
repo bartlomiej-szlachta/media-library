@@ -40,6 +40,7 @@ class HomeActivity : AppCompatActivity() {
     private val floatingActionButtonOnClickListener = View.OnClickListener {
         val intent = Intent(this, FormActivity::class.java)
             .putExtra(FormModeEnum.TAG, FormModeEnum.CREATE)
+                // TODO: pass item status to the form (to select the right chip)
             .putExtra(ItemTypeEnum.TAG, getItemType())
         startActivity(intent)
     }
