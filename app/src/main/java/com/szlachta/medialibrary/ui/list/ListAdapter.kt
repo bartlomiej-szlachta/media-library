@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.szlachta.medialibrary.R
 import com.szlachta.medialibrary.model.Item
+import com.szlachta.medialibrary.model.ItemTypeEnum
 
 class ListAdapter(
     private val items: List<Item>,
@@ -17,7 +18,7 @@ class ListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_search_list_item, parent, false)
+            .inflate(R.layout.layout_list_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -36,11 +37,20 @@ class ListAdapter(
         private val itemImage: ImageView = itemView.findViewById(R.id.image_item)
 
         fun bind(item: Item, clickListener: OnItemClickListener) {
+            itemView.setOnClickListener { clickListener.onItemClicked(item) }
             itemRemoteId = item.remoteId
             itemTitle.text = item.title
             itemYear.text = item.year?.toString()
-            imageLoader.loadImage(item.imageUrl, itemImage)
-            itemView.setOnClickListener { clickListener.onItemClicked(item) }
+            if (item.imageUrl != null) {
+                imageLoader.loadImage(item.imageUrl, itemImage)
+            } else {
+                val drawable = when(item.type!!) {
+                    ItemTypeEnum.GAMES -> R.drawable.ic_games_white_50dp
+                    ItemTypeEnum.MOVIES -> R.drawable.ic_local_movies_white_50dp
+                    ItemTypeEnum.BOOKS -> R.drawable.ic_book_white_50dp
+                }
+                itemImage.setBackgroundResource(drawable)
+            }
         }
     }
 }
