@@ -27,6 +27,8 @@ Android media library app developed in Kotlin
 ## Credits
 
 -  Movies database provided by [OMDB](http://www.omdbapi.com/)
+-  TV shows database provided by [TVmaze](https://www.tvmaze.com/api)
+-  Books database provided by [Google](https://developers.google.com/books)
 
 ## Dev environment preparation
 
