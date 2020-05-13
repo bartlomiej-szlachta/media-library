@@ -1,9 +1,9 @@
 # media-library
-Android media library app developed in Kotlin
+Android media library app developed for Android
 
 ## Main functionality:
 - sign in with google account
-- note games, movies and books titles
+- note games, movies, TV shows and books titles
 - view noted items, divided into *planned*, *started*, *finished*
 - edit and remove noted items
 - search items using 3rd' parties databases
