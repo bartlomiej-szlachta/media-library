@@ -27,7 +27,7 @@
             android:name=".ui.search.SearchActivity"
             android:windowSoftInputMode="stateVisible" />
         <activity
-            android:name=".ui.profile.ProfileActivity"
+            android:name=".ui.profile.ProfileFragment"
             android:theme="@style/Theme.MaterialComponents.DayNight.Dialog" />
     </application>
 
