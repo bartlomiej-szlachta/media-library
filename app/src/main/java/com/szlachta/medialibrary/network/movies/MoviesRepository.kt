@@ -1,7 +1,6 @@
 package com.szlachta.medialibrary.network.movies
 
 import androidx.lifecycle.MutableLiveData
-import com.szlachta.medialibrary.model.ItemTypeEnum
 import com.szlachta.medialibrary.model.ItemsList
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,23 +23,18 @@ class MoviesRepository private constructor() {
 
     fun getMoviesByQuery(query: String): MutableLiveData<ItemsList> {
         moviesList = MutableLiveData()
-        api.getMoviesByQuery(query).enqueue(object : Callback<MoviesListResponse> {
+        api.getMoviesByQuery(query).enqueue(object : Callback<MoviesResponse> {
             override fun onResponse(
-                call: Call<MoviesListResponse>,
-                response: Response<MoviesListResponse>
+                call: Call<MoviesResponse>,
+                response: Response<MoviesResponse>
             ) {
                 if (response.code() == 200) {
-                    moviesList.value = response.body()
-
-                    // TODO: set the type better way
-                    moviesList.value?.items?.forEach {
-                        it.type = ItemTypeEnum.MOVIES
-                    }
+                    moviesList.value = response.body()?.toModel()
                 }
             }
 
-            override fun onFailure(call: Call<MoviesListResponse>, t: Throwable) {
-                moviesList.value = MoviesListResponse(errorMessage = t.message)
+            override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
+                moviesList.value = ItemsList(errorMessage = t.message)
             }
         })
         return moviesList

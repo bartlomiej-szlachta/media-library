@@ -6,5 +6,5 @@ import retrofit2.http.Query
 
 interface MoviesApi {
     @GET("/")
-    fun getMoviesByQuery(@Query("s") query: String): Call<MoviesListResponse>
+    fun getMoviesByQuery(@Query("s") query: String): Call<MoviesResponse>
 }

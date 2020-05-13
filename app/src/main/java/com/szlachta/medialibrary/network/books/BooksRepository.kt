@@ -29,7 +29,7 @@ class BooksRepository private constructor() {
                 response: Response<BooksResponse>
             ) {
                 if (response.code() == 200) {
-                    booksList.value = response.body()?.toItemsResponse()
+                    booksList.value = response.body()?.toModel()
                 }
             }
 

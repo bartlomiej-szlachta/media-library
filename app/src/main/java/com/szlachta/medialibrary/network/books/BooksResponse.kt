@@ -16,7 +16,7 @@ data class BooksResponse(
         @SerializedName("id") val id: String?,
         @SerializedName("volumeInfo") val volumeInfo: VolumeInfoResponse?
     ) {
-        fun toItem(): Item {
+        fun toModel(): Item {
             return Item(
                 title = volumeInfo?.title ?: "",
                 type = ItemTypeEnum.BOOKS,
@@ -41,13 +41,13 @@ data class BooksResponse(
         @SerializedName("message") val message: String?
     )
 
-    fun toItemsResponse(): ItemsList {
+    fun toModel(): ItemsList {
         return ItemsList(
             errorMessage = error?.message,
             totalElements = totalItems,
             items = items?.stream()
                 ?.map {
-                    return@map it.toItem()
+                    return@map it.toModel()
                 }
                 ?.collect(Collectors.toList())
         )
