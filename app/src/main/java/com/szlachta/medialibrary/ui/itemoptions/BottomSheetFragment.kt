@@ -68,6 +68,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             val drawable = when(item.type!!) {
                 ItemTypeEnum.GAMES -> R.drawable.ic_games_white_50dp
                 ItemTypeEnum.MOVIES -> R.drawable.ic_local_movies_white_50dp
+                ItemTypeEnum.TV_SHOWS -> R.drawable.ic_live_tv_white_50dp
                 ItemTypeEnum.BOOKS -> R.drawable.ic_book_white_50dp
             }
             current_item_image.setBackgroundResource(drawable)

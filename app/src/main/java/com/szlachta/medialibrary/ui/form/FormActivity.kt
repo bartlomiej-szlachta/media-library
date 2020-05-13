@@ -128,6 +128,7 @@ class FormActivity : AppCompatActivity() {
         val itemTypeName: String = when (itemType) {
             ItemTypeEnum.GAMES -> getString(R.string.title_form_game)
             ItemTypeEnum.MOVIES -> getString(R.string.title_form_movie)
+            ItemTypeEnum.TV_SHOWS -> getString(R.string.title_form_tv_show)
             ItemTypeEnum.BOOKS -> getString(R.string.title_form_book)
         }
         return "$actionName $itemTypeName"

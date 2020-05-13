@@ -9,6 +9,10 @@
         android:icon="@drawable/ic_movies"
         android:title="@string/menu_movies" />
     <item
+        android:id="@+id/action_tv_shows"
+        android:icon="@drawable/ic_live_tv"
+        android:title="@string/menu_tv_shows" />
+    <item
         android:id="@+id/action_books"
         android:icon="@drawable/ic_books"
         android:title="@string/menu_books" />

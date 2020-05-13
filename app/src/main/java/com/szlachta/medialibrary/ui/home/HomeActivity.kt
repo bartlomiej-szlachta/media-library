@@ -16,6 +16,7 @@ import com.szlachta.medialibrary.ui.form.FormModeEnum
 import com.szlachta.medialibrary.ui.profile.ProfileFragment
 import com.szlachta.medialibrary.ui.search.SearchActivity
 import kotlinx.android.synthetic.main.activity_home.*
+import java.lang.RuntimeException
 
 class HomeActivity : AppCompatActivity() {
     companion object {
@@ -46,8 +47,9 @@ class HomeActivity : AppCompatActivity() {
                 val position = when (it.itemId) {
                     R.id.action_games -> ItemTypeEnum.GAMES.position
                     R.id.action_movies -> ItemTypeEnum.MOVIES.position
+                    R.id.action_tv_shows -> ItemTypeEnum.TV_SHOWS.position
                     R.id.action_books -> ItemTypeEnum.BOOKS.position
-                    else -> ItemTypeEnum.GAMES.position
+                    else -> throw RuntimeException("Unknown bottom tab selected")
                 }
                 pager_home.setCurrentItem(position, false)
                 setActionBarTitle()
@@ -98,8 +100,9 @@ class HomeActivity : AppCompatActivity() {
         action_bar_home_title.text = when (pager_home.currentItem) {
             ItemTypeEnum.GAMES.position -> getString(R.string.search_games)
             ItemTypeEnum.MOVIES.position -> getString(R.string.search_movies)
+            ItemTypeEnum.TV_SHOWS.position -> getString(R.string.search_tv_shows)
             ItemTypeEnum.BOOKS.position -> getString(R.string.search_books)
-            else -> ""
+            else -> throw RuntimeException("Unknown bottom tab selected")
         }
     }
 }

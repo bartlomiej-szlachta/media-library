@@ -3,7 +3,8 @@ package com.szlachta.medialibrary.model
 enum class ItemTypeEnum(val position: Int) {
     GAMES(0),
     MOVIES(1),
-    BOOKS(2),
+    TV_SHOWS(2),
+    BOOKS(3),
     ;
 
     companion object {

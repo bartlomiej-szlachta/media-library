@@ -113,6 +113,7 @@ class SearchActivity : AppCompatActivity(), ImageLoader, OnItemClickListener {
         input_search_query.hint = when (itemType) {
             ItemTypeEnum.GAMES -> getString(R.string.search_games)
             ItemTypeEnum.MOVIES -> getString(R.string.search_movies)
+            ItemTypeEnum.TV_SHOWS -> getString(R.string.search_tv_shows)
             ItemTypeEnum.BOOKS -> getString(R.string.search_books)
         }
     }
