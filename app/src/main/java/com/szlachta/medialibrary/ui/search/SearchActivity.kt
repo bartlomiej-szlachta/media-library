@@ -153,7 +153,7 @@ class SearchActivity : AppCompatActivity(), ImageLoader, OnItemClickListener {
     }
 
     private fun requestMoviesList(movieQuery: String) {
-        viewModel.getItemsList(movieQuery, itemType).observe(this,
+        viewModel.getByQuery(movieQuery, itemType).observe(this,
             Observer { t ->
                 if (t.items != null) {
                     rv_search_list.adapter = ListAdapter(t.items!!, this, this)

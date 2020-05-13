@@ -5,16 +5,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.szlachta.medialibrary.model.ItemTypeEnum
 import com.szlachta.medialibrary.model.ListResponse
+import com.szlachta.medialibrary.network.books.BooksRepository
 import com.szlachta.medialibrary.network.movies.MoviesRepository
 
 class SearchViewModel : ViewModel() {
-    private val repository: MoviesRepository = MoviesRepository.getInstance()
+    private val moviesRepository: MoviesRepository by lazy {
+        MoviesRepository.getInstance()
+    }
+    private val booksRepository: BooksRepository by lazy {
+        BooksRepository.getInstance()
+    }
 
-    fun getItemsList(query: String, itemType: ItemTypeEnum): LiveData<ListResponse> {
+    fun getByQuery(query: String, itemType: ItemTypeEnum): LiveData<ListResponse> {
         return when (itemType) {
             ItemTypeEnum.GAMES -> MutableLiveData() // TODO
-            ItemTypeEnum.MOVIES -> repository.getItemsList(query)
-            ItemTypeEnum.BOOKS -> MutableLiveData() // TODO
+            ItemTypeEnum.MOVIES -> moviesRepository.getMoviesByQuery(query)
+            ItemTypeEnum.BOOKS -> booksRepository.getBooksByQuery(query)
         }
     }
 }

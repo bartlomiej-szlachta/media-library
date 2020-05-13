@@ -17,6 +17,7 @@ android {
         Properties properties = new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
         buildConfigField("String", "API_KEY_MOVIES", properties.getProperty("api_key_movies", ""))
+        buildConfigField("String", "API_KEY_BOOKS", properties.getProperty("api_key_books", ""))
     }
 
     buildTypes {
@@ -52,8 +53,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:19.3.0'
     implementation 'com.google.firebase:firebase-database-ktx:19.3.0'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.8.1'
-    implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
     implementation 'com.squareup.okhttp3:okhttp:4.6.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.6.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
+    implementation 'com.squareup.retrofit2:converter-simplexml:2.5.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.8.1'
 }

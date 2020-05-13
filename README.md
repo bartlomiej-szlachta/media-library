@@ -32,11 +32,13 @@ Android media library app developed in Kotlin
 
 An API key needs to be provided in order for OMDB to allow data access. To provide the key, follow these steps:
 1. Get an API key (6-sing long) from [OMDB](http://www.omdbapi.com/)
-2. To the local gradle-created file `local.properties` add the following content:
+2. Get an API key from [Google](https://developers.google.com/books/docs/v1/using)
+3. To the local gradle-created file `local.properties` add the following content:
 ```
-api_key_movies="YOUR_KEY"
+api_key_movies="YOUR_OMDB_KEY"
+api_key_books="YOUR_GOOGLE_KEY"
 ```
-3. Replace *YOUR_KEY* with the API key described in the point 1.
+4. Replace *YOUR_OMDB_KEY* and *YOUR_GOOGLE_KEY* with the API keys described in the point 1 and 2.
 
 Moreover, firebase needs to be configured to allow access from the app. Follow these steps:
 1. Paste `google-services.json` file, provided using other channel, to the `/app` directory.
