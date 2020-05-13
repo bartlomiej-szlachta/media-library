@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Media Library</string>
-    <string name="app_description">List your favorite films, games and books!</string>
+    <string name="app_description">Find and note your favorite games, movies, TV shows and books</string>
     <string name="button_sign_in_text">Sign In with Google</string>
     <string name="app_logo">App logo</string>
     <string name="menu_games">Games</string>
