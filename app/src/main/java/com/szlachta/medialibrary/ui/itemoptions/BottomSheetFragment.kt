@@ -62,7 +62,16 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private fun initializeHeader() {
         current_item_title_text.text = item.title
         current_item_year_text.text = item.year?.toString()
-        Glide.with(activity!!).load(item.imageUrl).into(current_item_image)
+        if (item.imageUrl != null) {
+            Glide.with(activity!!).load(item.imageUrl).into(current_item_image)
+        } else {
+            val drawable = when(item.type!!) {
+                ItemTypeEnum.GAMES -> R.drawable.ic_games_white_50dp
+                ItemTypeEnum.MOVIES -> R.drawable.ic_local_movies_white_50dp
+                ItemTypeEnum.BOOKS -> R.drawable.ic_book_white_50dp
+            }
+            current_item_image.setBackgroundResource(drawable)
+        }
     }
 
     private fun initializeSetPlannedOption() {
