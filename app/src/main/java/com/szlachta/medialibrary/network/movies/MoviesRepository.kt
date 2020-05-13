@@ -2,7 +2,7 @@ package com.szlachta.medialibrary.network.movies
 
 import androidx.lifecycle.MutableLiveData
 import com.szlachta.medialibrary.model.ItemTypeEnum
-import com.szlachta.medialibrary.model.ListResponse
+import com.szlachta.medialibrary.model.ItemsList
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,9 +20,9 @@ class MoviesRepository private constructor() {
     }
 
     private var api: MoviesApi = RetrofitService.createService()
-    private lateinit var moviesList: MutableLiveData<ListResponse>
+    private lateinit var moviesList: MutableLiveData<ItemsList>
 
-    fun getMoviesByQuery(query: String): MutableLiveData<ListResponse> {
+    fun getMoviesByQuery(query: String): MutableLiveData<ItemsList> {
         moviesList = MutableLiveData()
         api.getMoviesByQuery(query).enqueue(object : Callback<MoviesListResponse> {
             override fun onResponse(

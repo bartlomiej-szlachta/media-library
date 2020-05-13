@@ -3,7 +3,7 @@ package com.szlachta.medialibrary.network.books
 import com.google.gson.annotations.SerializedName
 import com.szlachta.medialibrary.model.Item
 import com.szlachta.medialibrary.model.ItemTypeEnum
-import com.szlachta.medialibrary.model.ListResponse
+import com.szlachta.medialibrary.model.ItemsList
 import java.util.stream.Collectors
 
 data class BooksResponse(
@@ -41,8 +41,8 @@ data class BooksResponse(
         @SerializedName("message") val message: String?
     )
 
-    fun toItemsResponse(): ListResponse {
-        return ListResponse(
+    fun toItemsResponse(): ItemsList {
+        return ItemsList(
             errorMessage = error?.message,
             totalElements = totalItems,
             items = items?.stream()

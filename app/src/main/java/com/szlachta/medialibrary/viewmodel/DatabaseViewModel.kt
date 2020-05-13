@@ -8,7 +8,7 @@ import com.szlachta.medialibrary.model.*
 class DatabaseViewModel : ViewModel() {
     private val repository = DatabaseRepository.getInstance()
 
-    fun getItemsList(itemType: ItemTypeEnum, itemStatus: ItemStatusEnum): LiveData<ListResponse> {
+    fun getItemsList(itemType: ItemTypeEnum, itemStatus: ItemStatusEnum): LiveData<ItemsList> {
         return repository.getItemsList(itemType, itemStatus)
     }
 

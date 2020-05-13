@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide
 import com.szlachta.medialibrary.R
 import com.szlachta.medialibrary.model.Item
 import com.szlachta.medialibrary.model.ItemTypeEnum
-import com.szlachta.medialibrary.model.ListResponse
+import com.szlachta.medialibrary.model.ItemsList
 import com.szlachta.medialibrary.model.ItemStatusEnum
 import com.szlachta.medialibrary.ui.list.ImageLoader
 import com.szlachta.medialibrary.ui.itemoptions.BottomSheetFragment
@@ -32,7 +32,7 @@ class TabItemFragment : Fragment(), OnItemClickListener, ImageLoader {
         ViewModelProvider(this).get(DatabaseViewModel::class.java)
     }
 
-    private val dataObserver = Observer<ListResponse> {
+    private val dataObserver = Observer<ItemsList> {
         if (it.errorMessage != null) {
             onError(it.errorMessage.toString())
         } else {

@@ -35,8 +35,8 @@ class DatabaseRepository private constructor() {
             .child(auth.currentUser!!.uid)
     }
 
-    fun getItemsList(itemType: ItemTypeEnum, itemStatus: ItemStatusEnum): LiveData<ListResponse> {
-        val items = MutableLiveData<ListResponse>()
+    fun getItemsList(itemType: ItemTypeEnum, itemStatus: ItemStatusEnum): LiveData<ItemsList> {
+        val items = MutableLiveData<ItemsList>()
 
         database.child(itemType.name)
             .orderByChild("status")
@@ -59,11 +59,11 @@ class DatabaseRepository private constructor() {
                         )
                     }.collect(Collectors.toList())
 
-                    items.value = ListResponse(items = list)
+                    items.value = ItemsList(items = list)
                 }
 
                 override fun onCancelled(p0: DatabaseError) {
-                    items.value = ListResponse(errorMessage = p0.message)
+                    items.value = ItemsList(errorMessage = p0.message)
                 }
             })
 
