@@ -37,7 +37,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="48dp"
-            android:text="@string/search_games"
             android:textSize="16sp" />
     </com.google.android.material.appbar.MaterialToolbar>
 
