@@ -9,6 +9,11 @@ Android media library app developed in Kotlin
 - search items using 3rd' parties databases
 - use app offline as it is online
 
+## Screenshots
+
+<img src="screenshots/Screenshot_1.png" width="32%"> <img src="screenshots/Screenshot_2.png" width="32%"> <img src="screenshots/Screenshot_3.png" width="32%">
+<img src="screenshots/Screenshot_4.png" width="32%"> <img src="screenshots/Screenshot_5.png" width="32%"> <img src="screenshots/Screenshot_6.png" width="32%">
+
 ## Tech stack
 
 - [Android Studio](https://developer.android.com/studio)
